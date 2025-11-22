@@ -9,7 +9,7 @@ const ListProducts_SP_Admin = () => {
 
   const fetchProducts = async () => {
     const { data, error } = await supabase
-      .from("product1")
+      .from("products")
       .select("*")
       .order("id", { ascending: true });
     if (error) console.error("Lỗi:", error.message);
@@ -22,7 +22,7 @@ const ListProducts_SP_Admin = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm("Bạn có chắc muốn xóa sản phẩm này không?")) {
-      const { error } = await supabase.from("product1").delete().eq("id", id);
+      const { error } = await supabase.from("products").delete().eq("id", id);
       if (error) alert("Lỗi khi xóa: " + error.message);
       else fetchProducts();
     }

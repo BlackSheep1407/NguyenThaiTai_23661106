@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  background-color: #FFFBE6;
+  color: #333;
 }
 * {
   font-family: "Marmelad", sans-serif;
@@ -24,32 +26,87 @@ body {
   font-family: "Times New Roman", Times, serif;
   color: blueviolet;
 }
-
+/* ========================================================= */
+/* --- HEADER CỐ ĐỊNH (FIXED HEADER) --- */
+/* ========================================================= */
 .header1 {
   height: 160px;
   display: flex;
   flex-direction: column;
+  
+   /* 🔑 KEY CSS CHO HIỆU ỨNG DÍNH CỐ ĐỊNH */
+   position: fixed; /* <--- ĐIỂM SỬA 1: Dính cố định */
+   top: 0; 
+   left: 0;
+   right: 0;
+   z-index: 1000; /* Đảm bảo menubar nằm trên mọi thứ */
 }
 
 .banner1 {
-  height: 104px;
+  height: 80px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #e7deaf;
+  background-color: #73af6f;
 }
 
 .ul1 {
   display: flex;
   flex-direction: row;
 }
+/* ========================================================= */
+/* --- KHUNG NỘI DUNG CHÍNH (MAIN CONTAINER) --- */
+/* ========================================================= */
+/* container_main là ô con của container và chứa list sản phẩm */
+/* .container_main{
+  padding: 20px;
+  margin-block: 90px;
+} */
+/* .container_main là div bọc nội dung sản phẩm bên trong .container */
+.container_main {
+  
+  padding-top: 160px; 
+  padding: 20px;
+  /* [SỬA ĐỔI QUAN TRỌNG]: Xóa margin-block (90px) gây ra khoảng trắng lớn và sai lệch bố cục */
+  /* margin-block: 90px;  */
+  width: 100%; 
+  /* [SỬA ĐỔI QUAN TRỌNG]: Giới hạn chiều rộng và căn giữa nội dung */
+  max-width: 1200px; 
+  margin: 0 auto; 
+  
+  /* Thêm style cho thẻ bọc nội dung chính (như trong ảnh bạn đã gửi) */
+  background-color: white; 
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  /* SỬA LỖI CHE KHUẤT: Padding phải bằng chiều cao của Header cố định (160px) (Đặt cuối dòng mới có tác dụng)*/ 
+  margin-block: 90px;
+}
 
-.container {
+
+/* .container {
   min-height: 500px;
   width: 100%;
   justify-content: center;
   display: flex;
-}
+} */
+/* 🔑 QUAN TRỌNG: Khắc phục nội dung bị che khuất khi menubar dính cố định */
+/* Chiều cao menubar là 80px */
+.container {
+   /* min-height: 500px;
+   width: 100%;
+   justify-content: center;
+   display: flex;
+    padding-top: 80px; <--- ĐIỂM SỬA 2: Thêm padding-top bằng chiều cao của menubar cố định, từ 80 -> 160px */
+    min-height: 500px;
+    width: 100%;
+    display: flex; 
+    justify-content: center;
+    /* [SỬA ĐỔI] Tăng Padding-top để tránh bị Header cố định (160px) che khuất. */
+    padding-top: 180px; /* Tăng từ 160px lên 180px để có khoảng thở */
+  }
+/* ========================================================= */
+/* --- MENUBAR (Thanh điều hướng) --- */
+/* ========================================================= */
 .menu {
   height: 56px;
   background-color: #b22d30;
@@ -60,16 +117,21 @@ body {
 
 /**********************/
 .menubar {
-  background-color: #73af6f;
-  height: 52px;
+  /* background-color: #73af6f; */
+  background-color: #493628;
+  color: #FFFBE6;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 30px;
   box-sizing: border-box;
-  position: fixed;
 }
-
+.vertical-separator { 
+  border-left: 1px solid rgba(255, 255, 255, 0.5); 
+  height: 20px; 
+  margin: 0 10px;
+}
 /* --- Menu bên trái --- */
 .menubar-left {
   display: flex;
@@ -79,20 +141,56 @@ body {
 .menu-item {
   color: #fff;
   text-decoration: none;
-  font-family: "Segoe UI", sans-serif;
+  padding-bottom: 3px;
+  /* font-family: "Segoe UI", sans-serif;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 500; */
+  
+  font-family: "Marmelad", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+
   transition: 0.2s;
   padding-left: 20px;
   padding-right: 20px;
 }
-
-.menu-item:hover {
-  text-decoration: underline;
-  opacity: 0.9;
-  padding-left: 10px;
-  padding-right: 10px;
+/* Hiệu ứng gạch chân */
+@keyframes underline-effect {
+  0% {
+      width: 0;
+  }
+  100% {
+      width: 100%;
+  }
 }
+.menu-box{
+  padding: 15px;
+}
+.menu-box:hover {
+  /* text-decoration: underline;
+  opacity: 0.9; */
+  /* padding-left: 10px;
+  padding-right: 10px; */
+  color: #FFFBE6; /* Giữ màu chữ trắng */
+
+}
+.menu-box::after{
+  content: ''; /* Thêm nội dung trống để tạo hiệu ứng */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px; /* Độ dày của đường gạch dưới */
+  background-color: white; /* Màu gạch dưới */
+  transition: width 0.4s ease; /* Hiệu ứng mượt mà */
+}
+.menu-box:hover::after{
+  width: 100%; /* Khi hover, đường gạch dưới sẽ mở rộng */
+  animation: underline-effect 0.3s forwards; /* Áp dụng hiệu ứng gạch dưới */
+}
+
+
+
 
 /* --- Phần bên phải (tên người dùng + đăng xuất) --- */
 .menubar-right {
@@ -100,7 +198,9 @@ body {
   align-items: center;
   gap: 12px;
 }
-
+/* ========================================================= */
+/* --- CÁC THÀNH PHẦN KHÁC (topleft, logo1...) --- */
+/* ========================================================= */
 .username {
   color: #fff;
   font-size: 14px;
@@ -175,3 +275,12 @@ body {
 .menubar-left .ul1 li .submenu li a:hover {
   background-color: #ddd;
 }
+/* ========================================================= */
+/* --- BỐ CỤC SẢN PHẨM (MỚI) --- */
+/* ========================================================= */
+/* Áp dụng lớp này cho DIV chứa toàn bộ danh sách card sản phẩm */
+/*
+ * SỬ DỤNG CSS GRID VÀ MEDIA QUERIES ĐỂ DÀN HÀNG SẢN PHẨM.
+ * Áp dụng cho thẻ DIV bao ngoài tất cả các thẻ sản phẩm.
+ */
+ 

@@ -17,6 +17,8 @@ import ListProducts from "./ListProducts";
 // @ts-ignore
 import ListProducts_SP from "./ListProducts_SP";
 
+// import Categories;
+
 // @ts-ignore
 import Trang2 from "./Trang2";
 
@@ -45,7 +47,7 @@ export default function App() {
           <Route index element={<ListProducts_SP />} />
           <Route path="trang1" element={<Trang1 />} />
           <Route path="trang2" element={<Trang2 />} />
-          <Route path="sanpham/:id" element={<Chitietsanpham />} />
+          {/* <Route path="sanpham/:id" element={<Chitietsanpham />} /> */}
           <Route path="/admin/edit/:id" element={<EditProduct />} />
 
           {/* <Route path="detail/:id" element={<ProductDetail />} /> */}
@@ -66,7 +68,22 @@ export default function App() {
             }
           />
         </Route>
+
+        {/* Trang chủ - Hiển thị tất cả sản phẩm */}
+        <Route index element={<ListProducts_SP />} />
+
+        {/* ✅ ROUTE LỌC SẢN PHẨM */}
+        {/* Khi click vào một danh mục, sẽ chuyển đến đường dẫn này */}
+        <Route path="category/:categoryId" element={<ListProducts_SP />} />
+
+        {/* Chi tiết sản phẩm */}
+        <Route path="sanpham/:id" element={<Chitietsanpham />} />
       </Routes>
     </BrowserRouter>
   );
 }
+
+
+
+
+

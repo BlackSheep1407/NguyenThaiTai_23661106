@@ -19,7 +19,7 @@ const EditProduct = () => {
   useEffect(() => {
     if (!isNew) {
       supabase
-        .from("product1")
+        .from("products")
         .select("*")
         .eq("id", id)
         .single()
@@ -35,12 +35,12 @@ const EditProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isNew) {
-      const { error } = await supabase.from("product1").insert([product]);
+      const { error } = await supabase.from("products").insert([product]);
       if (error) return alert("Lỗi thêm: " + error.message);
       alert("✅ Đã thêm sản phẩm!");
     } else {
       const { error } = await supabase
-        .from("product1")
+        .from("products")
         .update(product)
         .eq("id", id);
       if (error) return alert("Lỗi cập nhật: " + error.message);

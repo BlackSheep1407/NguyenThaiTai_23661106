@@ -73,6 +73,8 @@ const ListProducts = () => {
               }}
             />
             <h3 style={{ margin: "10px 0 5px" }}>{motsp.title}</h3>
+            {/* <p>{motsp.price}</p> */}
+            {/* <p>{(motsp.price * 24000).toLocaleString("vi-VN")} VND</p> */}
             <p>{motsp.price}</p>
           </div>
         ))}

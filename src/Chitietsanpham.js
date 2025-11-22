@@ -1,3 +1,90 @@
+// // src/Chitietsanpham.js
+// import React, { useEffect, useState } from "react";
+// import { useParams, useNavigate } from "react-router-dom";
+// import { supabase } from "./supabaseClient";
+
+// export default function Chitietsanpham() {
+//   const { id } = useParams();
+//   const navigate = useNavigate();
+
+//   const [product, setProduct] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     const fetchProduct = async () => {
+//       try {
+//         const { data, error } = await supabase
+//           .from("products")
+//           .select("*")
+//           .eq("id", id)
+//           .single();
+
+//         if (error) {
+//           throw new Error(`Lỗi Supabase: ${error.message}`);
+//         }
+
+//         if (!data) {
+//           throw new Error("Không tìm thấy sản phẩm trong cơ sở dữ liệu.");
+//         }
+
+//         setProduct(data);
+//       } catch (err) {
+//         setError(err.message);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchProduct();
+//   }, [id]);
+
+//   if (loading) {
+//     return <p style={{ padding: 20 }}>Đang tải dữ liệu...</p>;
+//   }
+
+//   if (error || !product) {
+//     return (
+//       <div style={{ padding: 20 }}>
+//         <h3>Không tìm thấy sản phẩm!</h3>
+//         <p>{error}</p>
+//         <button onClick={() => navigate("/")}>Quay lại Trang Chủ</button>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div style={{ padding: "20px" }}>
+//       <button onClick={() => navigate(-1)} style={{ marginBottom: "20px" }}>
+//         ⬅ Quay lại
+//       </button>
+
+//       <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
+//         <img
+//           src={product.image}
+//           alt={product.title}
+//           style={{ width: "250px", height: "250px", objectFit: "contain" }}
+//         />
+//         <div>
+//           <h2>{product.title}</h2>
+//           <p style={{ margin: "5px 0" }}>
+//             <small style={{ color: "#555" }}>
+//               ⭐ {product.rating_rate} | ({product.rating_count} đánh giá)
+//             </small>
+//           </p>
+//           <p>
+//             <strong>Giá:</strong> ${product.price}
+//           </p>
+//           <p>
+//             <strong>Loại ID:</strong> {product.category_id}
+//           </p>
+//           <p style={{ maxWidth: "400px" }}>{product.description}</p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
 // src/Chitietsanpham.js
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
