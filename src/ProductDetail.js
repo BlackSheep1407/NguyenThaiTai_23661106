@@ -7,6 +7,20 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
 
+// Hàm tiện ích để định dạng tiền tệ Việt Nam (30000 -> 30.000đ)
+const formatCurrency = (amount) => {
+  if (amount === null || amount === undefined) return "";
+
+  // Sử dụng Intl.NumberFormat với locale 'vi-VN'
+  return (
+    new Intl.NumberFormat("vi-VN", {
+      style: "decimal", // Chỉ định kiểu số thập phân thông thường
+      minimumFractionDigits: 0, // Đảm bảo không có số thập phân (như .00)
+      maximumFractionDigits: 0,
+    }).format(amount) + "đ"
+  ); // Thêm ký hiệu 'đ' sau khi định dạng
+};
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -99,7 +113,7 @@ const ProductDetail = () => {
           <p
             style={{ fontSize: "1.2rem", color: "#e63946", fontWeight: "bold" }}
           >
-            ${product.price}
+            {product.price}
           </p>
 
           <p style={{ marginTop: "10px", color: "#555" }}>

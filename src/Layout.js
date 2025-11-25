@@ -319,6 +319,12 @@ const Layout = () => {
     navigate("/login");
   };
 
+  // * Chuyển đổi chuỗi có dấu thành slug (dạng URL thân thiện).
+  // * Ví dụ: "Xoài Cát Chu ngon" -> "xoai-cat-chu-ngon"
+  // * @param {string} text 
+  // * @returns {string} Slug đã được tạo.
+  // */
+
   return (
     <html>
       <header>
@@ -395,7 +401,7 @@ const Layout = () => {
                     </ul>
                   </li>
                 <li class="menu-box">
-                  <a href="/admin/products" className="menu-item" onClick={() => navigate("/gioithieu")}>
+                  <a href="trang2" className="menu-item" onClick={() => navigate("/gioithieu")}>
                     Giới Thiệu
                   </a>
                 </li>
@@ -488,7 +494,7 @@ const Layout = () => {
           <Outlet />
         </div>
       </body>
-      <footer> © 2025 Cửa Hàng Trái Cây 2TFresh</footer>
+      <footer> <p>© 2025 Cửa Hàng Trái Cây 2TFresh</p></footer>
     </html>
   );
 };

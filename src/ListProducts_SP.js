@@ -118,6 +118,26 @@ const formatCurrency = (amount) => {
   ); // Thêm ký hiệu 'đ' sau khi định dạng
 };
 
+  // * Chuyển đổi chuỗi có dấu thành slug (dạng URL thân thiện).
+  // * Ví dụ: "Xoài Cát Chu ngon" -> "xoai-cat-chu-ngon"
+  // * @param {string} text 
+  // * @returns {string} Slug đã được tạo.
+  // */
+  const slugify = (text) => {
+    if (!text) return '';
+    return text
+      .toString()
+      .toLowerCase()
+      .normalize('NFD') // Tách các ký tự có dấu thành ký tự cơ bản và dấu phụ
+      .replace(/[\u0300-\u036f]/g, '') // Loại bỏ dấu phụ (như ´, `, ...)
+      .replace(/đ/g, 'd') // Xử lý chữ đ
+      .replace(/ /g, '-') // Thay thế khoảng trắng bằng dấu gạch ngang
+      .replace(/[^\w-]+/g, '') // Loại bỏ tất cả ký tự không phải chữ, số hoặc gạch ngang
+      .replace(/--+/g, '-') // Thay thế nhiều dấu gạch ngang liền kề bằng một dấu gạch ngang
+      .trim()
+      .replace(/^-+|-+$/g, ''); // Loại bỏ gạch ngang ở đầu hoặc cuối
+  };
+
 const ListProducts_SP = () => {
   // Khai báo Ref (productGridRef)
   const productGridRef = React.useRef(null); // Ref để cuộn đến lưới sản phẩm
@@ -336,7 +356,7 @@ const ListProducts_SP = () => {
               color: "#e63946",
             }}
           >
-            Không tìm thấy sản phẩm nào trong danh mục **{activeCategoryName}**.
+             🥺 Không tìm thấy sản phẩm nào trong danh mục **{activeCategoryName}**
           </div>
         ) : (
           <div
@@ -349,7 +369,7 @@ const ListProducts_SP = () => {
             {listProduct.map((p) => (
               <div
                 key={p.id}
-                onClick={() => navigate(`/detail/${p.id}`)}
+                onClick={() => navigate(`sanpham/${p.id}`)}
                 style={{
                   border: "1px solid #ddd",
                   borderRadius: "10px",
@@ -357,7 +377,7 @@ const ListProducts_SP = () => {
                   textAlign: "center",
                   cursor: "pointer",
                   background: "#fff",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+                  boxShadow: "0 5px 6px rgba(0,0,0,0.1)",
                   transition: "transform 0.2s ease, box-shadow 0.2s ease",
                 }}
                 onMouseEnter={(e) => {

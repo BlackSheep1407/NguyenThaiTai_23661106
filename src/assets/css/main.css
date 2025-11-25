@@ -3,6 +3,12 @@ body {
   background-color: #FFFBE6;
   color: #333;
 }
+/* tuy chinh */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} 
 * {
   font-family: "Marmelad", sans-serif;
   font-weight: 400;
@@ -92,6 +98,7 @@ body {
 /* 🔑 QUAN TRỌNG: Khắc phục nội dung bị che khuất khi menubar dính cố định */
 /* Chiều cao menubar là 80px */
 .container {
+  
    /* min-height: 500px;
    width: 100%;
    justify-content: center;
@@ -253,6 +260,7 @@ body {
   min-width: 160px;
   border: 1px solid #ddd;
   z-index: 1;
+  border-radius:20px;
 }
 
 .menubar-left .ul1 li:hover .submenu {
@@ -273,7 +281,12 @@ body {
 }
 
 .menubar-left .ul1 li .submenu li a:hover {
-  background-color: #ddd;
+  background-color: #F9E7B2;
+  border-radius:20px;
+  /* background-color: #493628; */
+  /* color: #F9F8F6; */
+  
+
 }
 /* ========================================================= */
 /* --- BỐ CỤC SẢN PHẨM (MỚI) --- */
@@ -283,4 +296,29 @@ body {
  * SỬ DỤNG CSS GRID VÀ MEDIA QUERIES ĐỂ DÀN HÀNG SẢN PHẨM.
  * Áp dụng cho thẻ DIV bao ngoài tất cả các thẻ sản phẩm.
  */
+
+
+ /* FOOTER */
+ footer {
+  background-color: #73af6f; /* màu xanh lá 2TFresh */
+  color: #fff; /* chữ màu trắng */
+  text-align: center;
+  padding: 20px 0;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  box-shadow: 0 -3px 10px rgba(0,0,0,0.1); /* bóng nhẹ phía trên */
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  transition: background 0.3s ease;
+}
+
+footer:hover {
+  background-color: #3CB371; /* đổi màu khi hover */
+}
+
+footer p {
+  margin: 0;
+}
+
  
