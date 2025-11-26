@@ -366,7 +366,7 @@ const Layout = () => {
                 </li>
                 <li class="menu-box">
                   <a
-                    href="/trang1"
+                    href=""
                     className="menu-item"
                     onClick={() => navigate("/san-pham")}
                   >
@@ -394,7 +394,7 @@ const Layout = () => {
                           style={{ height: "auto" }}
                         >
                           {/* Sử dụng thẻ <a> để cuộn xuống section nếu ở trang chủ */}
-                          <a href={`/trang1#category-${cat.categories_id}`}>
+                          <a href={`/category-${cat.categories_id}`}>
                             {cat.name}
                           </a>
                         </li>
