@@ -3,7 +3,7 @@ import { products } from "./data/product";
 // import { products } from "./ListProducts";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const Trang1 = () => {
+const Products = () => {
   const navigate = useNavigate();
   return (
     <div style={{ padding: "20px" }}>
@@ -39,7 +39,7 @@ const Trang1 = () => {
     </div>
   );
 };
-export default Trang1;
+export default Products;
 
 // import React, { useState, useEffect, useMemo, useCallback } from "react";
 

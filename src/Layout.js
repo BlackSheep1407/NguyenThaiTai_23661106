@@ -98,16 +98,14 @@
 //                   </a>
 //                 </li>
 //               </ul>
-              
-//             </div>
 
-              
+//             </div>
 
 //             <div className="menubar-right">
 //               {/* <div id="divtimkiem" style={{ width: "300px" }}>
 //                 Phần tìm kiếm
 //               </div> */}
-//               <div 
+//               <div
 //                     id="divtimkiem"
 //                     style={{
 //                         width: "200px", // ⬅️ GIẢM KÍCH THƯỚC CHIỀU NGANG
@@ -122,12 +120,12 @@
 //                     }}
 //                 >
 //                     {/* Biểu tượng Kính lúp (thay thế bằng icon thực tế nếu dùng thư viện như FontAwesome) */}
-//                     <span style={{ 
-//                         color: "#888", 
-//                         marginRight: "10px", 
-//                         fontSize: "1.2rem" 
+//                     <span style={{
+//                         color: "#888",
+//                         marginRight: "10px",
+//                         fontSize: "1.2rem"
 //                     }}>
-//                         🔍 
+//                         🔍
 //                     </span>
 
 //                     {/* Ô nhập liệu tìm kiếm */}
@@ -143,11 +141,11 @@
 //                             padding: "3px 0" // Giảm padding input
 //                         }}
 //                     />
-                    
+
 //                 </div>
-                
+
 //                         {/* 📏 ĐƯỜNG PHÂN CÁCH DỌC ĐÃ THÊM */}
-//                         <span class="vertical-separator" style={{ 
+//                         <span class="vertical-separator" style={{
 //                             borderLeft: '1px solid #ffffff', // Màu trắng để dễ nhìn trên nền xanh lá
 //                             height: '20px', // Chiều cao của thanh phân cách
 //                             marginRight: '15px',
@@ -184,8 +182,6 @@
 // export default Layout;
 // CODE TRÊN LÀ BẢN ORIGINAL
 
-
-
 // // --- Component Thanh Menu Cố Định (Sticky Menu) ---
 // const StickyCategoryMenu = ({ categories }) => {
 //     // Hàm cuộn mượt mà đến phần tử có ID tương ứng
@@ -193,7 +189,7 @@
 //         const element = document.getElementById(`category-${id}`);
 //         if (element) {
 //             // Cuộn mượt mà và bù trừ cho chiều cao của thanh menu cố định (70px + 60px cho search bar)
-//             const yOffset = -130; 
+//             const yOffset = -130;
 //             const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
 //             window.scrollTo({ top: y, behavior: 'smooth' });
 //         }
@@ -203,7 +199,7 @@
 //         <div className="sticky-menu">
 //             <nav className="menu-container">
 //                 {categories.map(category => (
-//                     <button 
+//                     <button
 //                         key={category.categories_id}
 //                         onClick={() => scrollToCategory(category.categories_id)}
 //                         className="menu-item"
@@ -235,21 +231,19 @@
 //     );
 // };
 
-
 //CODE CẢI TIẾN
 import "./assets/css/main.css";
 import anhlogo from "./assets/images//logo.png";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 // bổ sung supabaseclient
-import { supabase } from './supabaseClient';
-
+import { supabase } from "./supabaseClient";
 
 const Layout = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   // ✅ ĐÃ THÊM: Khai báo biến categories để tránh lỗi "categories is not defined"
-  const [categories, setCategories] = useState([]); 
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -280,7 +274,7 @@ const Layout = () => {
   //     } catch (error) {
   //       console.error("Lỗi:", error);
   //       // Nếu lỗi, set mảng rỗng để không bị crash
-  //       setCategories([]); 
+  //       setCategories([]);
   //     }
   //   };
   //   fetchCategories();
@@ -292,26 +286,24 @@ const Layout = () => {
       try {
         // ✅ CẬP NHẬT: Sử dụng cách gọi SDK (đã được mô phỏng ở trên)
         const { data, error } = await supabase
-          .from('categories')
-          .select('categories_id, name')
-          .order('categories_id', { ascending: true });
+          .from("categories")
+          .select("categories_id, name")
+          .order("categories_id", { ascending: true });
 
         if (error) throw error;
-        
+
         setCategories(data || []);
       } catch (error) {
         console.error("Lỗi lấy danh mục:", error.message);
-        setCategories([]); 
+        setCategories([]);
       }
     };
     fetchCategories();
   }, []);
 
-// ------------------------------------
-    // 🚀 2. HÀM XỬ LÝ CLICK VÀ CUỘN
-    // ------------------------------------
-
-
+  // ------------------------------------
+  // 🚀 2. HÀM XỬ LÝ CLICK VÀ CUỘN
+  // ------------------------------------
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -321,7 +313,7 @@ const Layout = () => {
 
   // * Chuyển đổi chuỗi có dấu thành slug (dạng URL thân thiện).
   // * Ví dụ: "Xoài Cát Chu ngon" -> "xoai-cat-chu-ngon"
-  // * @param {string} text 
+  // * @param {string} text
   // * @returns {string} Slug đã được tạo.
   // */
 
@@ -364,12 +356,20 @@ const Layout = () => {
 
               <ul class="ul1">
                 <li class="menu-box">
-                  <a href="/#" className="menu-item" onClick={() => navigate("/")}>
+                  <a
+                    href="/#"
+                    className="menu-item"
+                    onClick={() => navigate("/")}
+                  >
                     Trang Chủ
                   </a>
                 </li>
                 <li class="menu-box">
-                  <a href="/trang1" className="menu-item" onClick={() => navigate("/trang1")}>
+                  <a
+                    href="/trang1"
+                    className="menu-item"
+                    onClick={() => navigate("/san-pham")}
+                  >
                     Sản phẩm
                   </a>
                   <ul class="submenu">
@@ -386,93 +386,112 @@ const Layout = () => {
                       <a href="#nuoceptraicay">Nước ép trái cây</a>
                     </li> */}
                     {/* MENU ĐỘNG */}
-                            {categories.length > 0 ? (
-                          categories.map((cat) => (
-                            <li key={cat.categories_id} className="menu-box" style={{height: 'auto'}}>
-                              {/* Sử dụng thẻ <a> để cuộn xuống section nếu ở trang chủ */}
-                              <a href={`/trang1#category-${cat.categories_id}`}>
-                                {cat.name}
-                              </a>
-                            </li>
-                          ))
-                        ) : (
-                          <li><a href="#">Đang tải...</a></li>
+                    {categories.length > 0 ? (
+                      categories.map((cat) => (
+                        <li
+                          key={cat.categories_id}
+                          className="menu-box"
+                          style={{ height: "auto" }}
+                        >
+                          {/* Sử dụng thẻ <a> để cuộn xuống section nếu ở trang chủ */}
+                          <a href={`/trang1#category-${cat.categories_id}`}>
+                            {cat.name}
+                          </a>
+                        </li>
+                      ))
+                    ) : (
+                      <li>
+                        <a href="#">Đang tải...</a>
+                      </li>
                     )}
-                    </ul>
-                  </li>
+                  </ul>
+                </li>
                 <li class="menu-box">
-                  <a href="trang2" className="menu-item" onClick={() => navigate("/gioithieu")}>
+                  <a
+                    href="trang2"
+                    className="menu-item"
+                    onClick={() => navigate("/gioithieu")}
+                  >
                     Giới Thiệu
                   </a>
                 </li>
                 <li class="menu-box">
-                  <a href="/admin/products" className="menu-item" onClick={() => navigate("/lienhe")}>
+                  <a
+                    href="/admin/products"
+                    className="menu-item"
+                    onClick={() => navigate("/lienhe")}
+                  >
                     Liên Hệ
                   </a>
                 </li>
                 <li class="menu-box">
-                  <a href="/admin/products" className="menu-item" onClick={() => navigate("/admin/products")}>
+                  <a
+                    href="/admin/products"
+                    className="menu-item"
+                    onClick={() => navigate("/admin/products")}
+                  >
                     Quản Trị
                   </a>
                 </li>
               </ul>
-              
             </div>
-
-              
 
             <div className="menubar-right">
               {/* <div id="divtimkiem" style={{ width: "300px" }}>
                 Phần tìm kiếm
               </div> */}
-              <div 
-                    id="divtimkiem"
-                    style={{
-                        width: "200px", // ⬅️ GIẢM KÍCH THƯỚC CHIỀU NGANG
-                        height: "auto",
-                        display: "flex",
-                        alignItems: "center",
-                        border: "1px solid #ccc",
-                        borderRadius: "20px", // Bo tròn góc
-                        padding: "3px 3px", // ⬅️ GIẢM PADDING (Giảm chiều cao)
-                        backgroundColor: "#f9f9f9",
-                        boxShadow: "0 2px 4px rgba(0,0,0,0.05)", // Thêm đổ bóng nhẹ
-                    }}
+              <div
+                id="divtimkiem"
+                style={{
+                  width: "200px", // ⬅️ GIẢM KÍCH THƯỚC CHIỀU NGANG
+                  height: "auto",
+                  display: "flex",
+                  alignItems: "center",
+                  border: "1px solid #ccc",
+                  borderRadius: "20px", // Bo tròn góc
+                  padding: "3px 3px", // ⬅️ GIẢM PADDING (Giảm chiều cao)
+                  backgroundColor: "#f9f9f9",
+                  boxShadow: "0 2px 4px rgba(0,0,0,0.05)", // Thêm đổ bóng nhẹ
+                }}
+              >
+                {/* Biểu tượng Kính lúp (thay thế bằng icon thực tế nếu dùng thư viện như FontAwesome) */}
+                <span
+                  style={{
+                    color: "#888",
+                    marginRight: "10px",
+                    fontSize: "1.2rem",
+                  }}
                 >
-                    {/* Biểu tượng Kính lúp (thay thế bằng icon thực tế nếu dùng thư viện như FontAwesome) */}
-                    <span style={{ 
-                        color: "#888", 
-                        marginRight: "10px", 
-                        fontSize: "1.2rem" 
-                    }}>
-                        🔍 
-                    </span>
+                  🔍
+                </span>
 
-                    {/* Ô nhập liệu tìm kiếm */}
-                    <input
-                        type="text"
-                        placeholder="Tìm kiếm sản phẩm..."
-                        style={{
-                            flexGrow: 1,
-                            border: "none",
-                            outline: "none", // Loại bỏ viền khi focus
-                            backgroundColor: "transparent",
-                            fontSize: "0.95rem", // ⬅️ GIẢM KÍCH THƯỚC CHỮ
-                            padding: "3px 0" // Giảm padding input
-                        }}
-                    />
-                    
-                </div>
-                
-                        {/* 📏 ĐƯỜNG PHÂN CÁCH DỌC ĐÃ THÊM */}
-                        <span class="vertical-separator" style={{ 
-                            borderLeft: '1px solid #ffffff', // Màu trắng để dễ nhìn trên nền xanh lá
-                            height: '20px', // Chiều cao của thanh phân cách
-                            marginRight: '15px',
-                            opacity: 0.6 // Làm mờ một chút cho đẹp
-                        }}></span>
+                {/* Ô nhập liệu tìm kiếm */}
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm sản phẩm..."
+                  style={{
+                    flexGrow: 1,
+                    border: "none",
+                    outline: "none", // Loại bỏ viền khi focus
+                    backgroundColor: "transparent",
+                    fontSize: "0.95rem", // ⬅️ GIẢM KÍCH THƯỚC CHỮ
+                    padding: "3px 0", // Giảm padding input
+                  }}
+                />
+              </div>
 
-                {/* user state */}
+              {/* 📏 ĐƯỜNG PHÂN CÁCH DỌC ĐÃ THÊM */}
+              <span
+                class="vertical-separator"
+                style={{
+                  borderLeft: "1px solid #ffffff", // Màu trắng để dễ nhìn trên nền xanh lá
+                  height: "20px", // Chiều cao của thanh phân cách
+                  marginRight: "15px",
+                  opacity: 0.6, // Làm mờ một chút cho đẹp
+                }}
+              ></span>
+
+              {/* user state */}
               {user ? (
                 <>
                   <span className="username">👤 {user.username}</span>
@@ -481,7 +500,11 @@ const Layout = () => {
                   </button>
                 </>
               ) : (
-                <a href="/login" className="login-link" onClick={() => navigate("/login")}>
+                <a
+                  href="/login"
+                  className="login-link"
+                  onClick={() => navigate("/login")}
+                >
                   Đăng nhập
                 </a>
               )}
@@ -494,13 +517,15 @@ const Layout = () => {
           <Outlet />
         </div>
       </body>
-      <footer> <p>© 2025 Cửa Hàng Trái Cây 2TFresh</p></footer>
+      <footer>
+        {" "}
+        <p>© 2025 Cửa Hàng Trái Cây 2TFresh</p>
+      </footer>
     </html>
   );
 };
 
 export default Layout;
-
 
 // CODE MẪU GEMINI
 // import React, { useEffect, useState } from "react";
@@ -517,7 +542,7 @@ export default Layout;
 
 // const Layout = () => {
 //   const [user, setUser] = useState(null);
-//   const [categories, setCategories] = useState([]); 
+//   const [categories, setCategories] = useState([]);
 //   const navigate = useNavigate();
 
 //   // 1. Lấy thông tin User từ localStorage
@@ -545,7 +570,7 @@ export default Layout;
 //         );
 
 //         if (!response.ok) throw new Error('Network response was not ok');
-        
+
 //         const data = await response.json();
 //         setCategories(data || []);
 //       } catch (error) {
@@ -574,11 +599,11 @@ export default Layout;
 //           height: 160px;
 //           display: flex;
 //           flex-direction: column;
-//           position: fixed; 
-//           top: 0; 
+//           position: fixed;
+//           top: 0;
 //           left: 0;
 //           right: 0;
-//           z-index: 1000; 
+//           z-index: 1000;
 //         }
 
 //         .banner1 {
@@ -605,9 +630,9 @@ export default Layout;
 
 //         .menubar-left { display: flex; gap: 20px; }
 //         .ul1 { display: flex; flex-direction: row; list-style: none; padding: 0; margin: 0; }
-        
+
 //         .menu-box { padding: 0 15px; position: relative; height: 56px; display: flex; align-items: center; }
-        
+
 //         .menu-item {
 //           color: #fff;
 //           text-decoration: none;
@@ -639,7 +664,7 @@ export default Layout;
 //           list-style: none;
 //         }
 //         .menu-box:hover .submenu { display: block; background-color: #e7deaf; }
-        
+
 //         .submenu li { padding: 0; }
 //         .submenu li a {
 //           color: #493628; text-decoration: none; display: block; padding: 10px 15px;
@@ -647,7 +672,7 @@ export default Layout;
 //         .submenu li a:hover { background-color: #ddd; }
 
 //         .menubar-right { display: flex; align-items: center; gap: 12px; }
-        
+
 //         #divtimkiem {
 //           width: 200px; height: auto; display: flex; alignItems: center;
 //           border: 1px solid #ccc; borderRadius: 20px; padding: 3px 3px;
@@ -658,7 +683,7 @@ export default Layout;
 //           font-size: 0.95rem; padding: 3px 0;
 //         }
 
-//         .vertical-separator { 
+//         .vertical-separator {
 //           border-left: 1px solid #ffffff; height: 20px; margin-right: 15px; opacity: 0.6;
 //         }
 
@@ -673,7 +698,7 @@ export default Layout;
 
 //         .container {
 //           min-height: 500px; width: 100%; display: flex; justify-content: center;
-//           padding-top: 160px; 
+//           padding-top: 160px;
 //         }
 //       `}</style>
 
@@ -756,7 +781,7 @@ export default Layout;
 //           </div>
 //         </div>
 //       </header>
-      
+
 //       <div id="body-wrapper">
 //         <div id="container" className="container">
 //           <Outlet />
@@ -770,17 +795,6 @@ export default Layout;
 
 // export default Layout;
 
-
-
-
-
-
-
-
-
-
-
-
 // const unsubscribe = onAuthStateChanged(authInstance, (firebaseUser) => {
 //   if (firebaseUser) {
 //       setUserId(firebaseUser.uid);
@@ -791,4 +805,3 @@ export default Layout;
 //   }
 //   setIsAuthReady(true);
 // });
-

@@ -1,10 +1,10 @@
 import "./styles.css";
 // @ts-ignore
-import Home from "./Home";
+import Home from "./Home_test.js";
 // @ts-ignore
 import Layout from "./Layout";
 // @ts-ignore
-import Trang1 from "./Trang1";
+import Products from "./Products";
 // @ts-ignore
 import Chitietsanpham from "./Chitietsanpham";
 
@@ -45,7 +45,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           {/* Trang chính (cho người dùng vãng lai) */}
           <Route index element={<ListProducts_SP />} />
-          <Route path="trang1" element={<Trang1 />} />
+          <Route path="san-pham" element={<Products />} />
           <Route path="trang2" element={<Trang2 />} />
           {/* <Route path="sanpham/:id" element={<Chitietsanpham />} /> */}
           <Route path="/admin/edit/:id" element={<EditProduct />} />
@@ -82,8 +82,3 @@ export default function App() {
     </BrowserRouter>
   );
 }
-
-
-
-
-
