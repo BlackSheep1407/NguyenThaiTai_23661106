@@ -1,5 +1,9 @@
-import "./styles.css";import CartModal from "./CartModal";
-import { useCart, CartItem } from "./CartContext";
+import "./styles.css";
+
+// @ts-ignore
+import CartModal from "./CartModal.js";
+// @ts-ignore
+import { useCart, CartItem } from "./CartContext.js";
 
 // @ts-ignore
 import Home from "./Home_test.js";
@@ -50,7 +54,7 @@ export default function App() {
           {/* Trang chính (cho người dùng vãng lai) */}
           <Route index element={<ListProducts_SP />} />
           <Route path="san-pham" element={<Products />} />
-          <Route path="lien-he" element={<ContactForm  />} />
+          <Route path="lien-he" element={<ContactForm />} />
           <Route path="trang2" element={<Trang2 />} />
           {/* <Route path="sanpham/:id" element={<Chitietsanpham />} /> */}
           <Route path="/admin/edit/:id" element={<EditProduct />} />
