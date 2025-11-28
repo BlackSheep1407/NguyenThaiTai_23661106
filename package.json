@@ -7,7 +7,7 @@
     "react",
     "starter"
   ],
-  "main": "src/index.tsx",
+  "main": "src/index.jsx",
   "dependencies": {
     "@supabase/supabase-js": "^2.78.0",
     "axios": "^1.12.2",
