@@ -246,8 +246,9 @@ import { FaShoppingCart } from "react-icons/fa"; // dùng react-icons
 
 const Layout = () => {
   const [user, setUser] = useState(null);
+
   // giỏ hàng
-  const { cart } = useCart();
+  const { cart = [], addToCart } = useCart(); // Nếu cart undefined → thành mảng rỗng
   const [isCartOpen, setIsCartOpen] = useState(false); // Lưu sản phẩm trong giỏ hàn
 
   const navigate = useNavigate();
@@ -520,11 +521,12 @@ const Layout = () => {
             </span>
           )}
         </div> */}
+              {/* GIỎ HÀNG */}
               <div
                 onClick={() => setIsCartOpen(true)}
                 style={{ position: "relative", cursor: "pointer" }}
               >
-                <FaShoppingCart size={24} color="#000" />
+                <FaShoppingCart size={24} color="white" />
                 {cart.length > 0 && (
                   <span
                     style={{
@@ -535,17 +537,14 @@ const Layout = () => {
                       color: "#fff",
                       borderRadius: "50%",
                       padding: "2px 6px",
+                      fontSize: "12px",
+                      fontWeight: "bold",
                     }}
                   >
-                    {cart.length}
+                    {cart.reduce((total, item) => total + item.quantity, 0)}
                   </span>
                 )}
               </div>
-
-              <CartModal
-                isOpen={isCartOpen}
-                onClose={() => setIsCartOpen(false)}
-              />
 
               {/* 📏 ĐƯỜNG PHÂN CÁCH DỌC ĐÃ THÊM */}
               <span
@@ -579,6 +578,9 @@ const Layout = () => {
           </div>
         </div>
       </header>
+
+      <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+
       <body>
         <div id="container" class="container">
           {/* Phần hiển thị sản phẩm (new one) */}
