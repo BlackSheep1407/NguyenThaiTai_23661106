@@ -238,13 +238,15 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 // bổ sung supabaseclient
 import { supabase } from "./supabaseClient";
+import SearchProduct from "./SearchProduct";
+import ListProducts_SP from "./ListProducts_SP"; //Import con vào để nó nhận prop từ cha và xử lí cho thanh tìm kiếm (của cha)
 
 const Layout = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   // ✅ ĐÃ THÊM: Khai báo biến categories để tránh lỗi "categories is not defined"
   const [categories, setCategories] = useState([]);
-
+  const [selectedId, setSelectedId] = useState(null); // ✅ state cho sản phẩm được chọn (thanh tìm kiếm) -> đổ prop cho con (ListProduct_SP) xử lí ở phần hiển thị sản phẩm
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -317,6 +319,20 @@ const Layout = () => {
   // * @returns {string} Slug đã được tạo.
   // */
 
+  // ===============================================
+// Thanh tìm kiếm
+// ===============================================
+// const handleCategoryClick = (id) => {
+//   setActiveCategoryId(id);
+//   setSelectedId(null); //Phần quan trọng để thay đổi sản phẩm dựa trên keyword tìm trên thanh tìm kiếm
+//   if (productGridRef.current) {
+//     productGridRef.current.scrollIntoView({ behavior: "smooth" });
+//   }
+// };
+
+
+
+
   return (
     <html>
       <header>
@@ -357,7 +373,7 @@ const Layout = () => {
               <ul class="ul1">
                 <li class="menu-box">
                   <a
-                    href="/#"
+                    href="/"
                     className="menu-item"
                     onClick={() => navigate("/")}
                   >
@@ -366,9 +382,9 @@ const Layout = () => {
                 </li>
                 <li class="menu-box">
                   <a
-                    href=""
+                    href="/"
                     className="menu-item"
-                    onClick={() => navigate("/san-pham")}
+                    onClick={() => navigate("/")}
                   >
                     Sản phẩm
                   </a>
@@ -417,9 +433,9 @@ const Layout = () => {
                 </li>
                 <li class="menu-box">
                   <a
-                    href="/admin/products"
+                    href="/lien-he"
                     className="menu-item"
-                    onClick={() => navigate("/lienhe")}
+                    onClick={() => navigate("/lien-he")}
                   >
                     Liên Hệ
                   </a>
@@ -440,45 +456,8 @@ const Layout = () => {
               {/* <div id="divtimkiem" style={{ width: "300px" }}>
                 Phần tìm kiếm
               </div> */}
-              <div
-                id="divtimkiem"
-                style={{
-                  width: "200px", // ⬅️ GIẢM KÍCH THƯỚC CHIỀU NGANG
-                  height: "auto",
-                  display: "flex",
-                  alignItems: "center",
-                  border: "1px solid #ccc",
-                  borderRadius: "20px", // Bo tròn góc
-                  padding: "3px 3px", // ⬅️ GIẢM PADDING (Giảm chiều cao)
-                  backgroundColor: "#f9f9f9",
-                  boxShadow: "0 2px 4px rgba(0,0,0,0.05)", // Thêm đổ bóng nhẹ
-                }}
-              >
-                {/* Biểu tượng Kính lúp (thay thế bằng icon thực tế nếu dùng thư viện như FontAwesome) */}
-                <span
-                  style={{
-                    color: "#888",
-                    marginRight: "10px",
-                    fontSize: "1.2rem",
-                  }}
-                >
-                  🔍
-                </span>
+               <SearchProduct onSelect={(id) => setSelectedId(id)} />
 
-                {/* Ô nhập liệu tìm kiếm */}
-                <input
-                  type="text"
-                  placeholder="Tìm kiếm sản phẩm..."
-                  style={{
-                    flexGrow: 1,
-                    border: "none",
-                    outline: "none", // Loại bỏ viền khi focus
-                    backgroundColor: "transparent",
-                    fontSize: "0.95rem", // ⬅️ GIẢM KÍCH THƯỚC CHỮ
-                    padding: "3px 0", // Giảm padding input
-                  }}
-                />
-              </div>
 
               {/* 📏 ĐƯỜNG PHÂN CÁCH DỌC ĐÃ THÊM */}
               <span
@@ -514,7 +493,12 @@ const Layout = () => {
       </header>
       <body>
         <div id="container" class="container">
-          <Outlet />
+          {/* Phần hiển thị sản phẩm (new one) */}
+        {/* <SearchProduct onSelect={(id) => setSelectedId(id)} /> */}
+        {/* <ListProducts_SP selectedId={selectedId} setSelectedId={setSelectedId} /> */}
+        {/* Phần hiển thị sản phẩm (old one) */}
+          {/* <Outlet /> */}
+          <Outlet context={{ selectedId, setSelectedId }} />
         </div>
       </body>
       <footer>

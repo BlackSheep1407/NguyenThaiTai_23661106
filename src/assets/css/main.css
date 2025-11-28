@@ -85,7 +85,7 @@ body {
   border-radius: 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
   /* SỬA LỖI CHE KHUẤT: Padding phải bằng chiều cao của Header cố định (160px) (Đặt cuối dòng mới có tác dụng)*/ 
-  margin-block: 90px;
+  /* margin-block: 90px; */
 }
 
 
@@ -109,7 +109,7 @@ body {
     display: flex; 
     justify-content: center;
     /* [SỬA ĐỔI] Tăng Padding-top để tránh bị Header cố định (160px) che khuất. */
-    padding-top: 180px; /* Tăng từ 160px lên 180px để có khoảng thở */
+    padding-top: 10px; /* Tăng từ 160px lên 180px để có khoảng thở */
   }
 /* ========================================================= */
 /* --- MENUBAR (Thanh điều hướng) --- */

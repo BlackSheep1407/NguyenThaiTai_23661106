@@ -103,6 +103,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
+import { useOutletContext } from "react-router-dom";
 
 // Hàm tiện ích để định dạng tiền tệ Việt Nam (30000 -> 30.000đ)
 const formatCurrency = (amount) => {
@@ -138,12 +139,16 @@ const formatCurrency = (amount) => {
       .replace(/^-+|-+$/g, ''); // Loại bỏ gạch ngang ở đầu hoặc cuối
   };
 
+// const ListProducts_SP = ({ selectedId, setSelectedId }) => {
 const ListProducts_SP = () => {
+  const { selectedId, setSelectedId } = useOutletContext(); // ✅ Lấy state từ Layout
   // Khai báo Ref (productGridRef)
   const productGridRef = React.useRef(null); // Ref để cuộn đến lưới sản phẩm
 
   // State để lưu trữ danh sách các danh mục (ví dụ: Rau Củ, Hải Sản)
   const [categories, setCategories] = useState([]);
+  //State thanh tìm kiếm 
+  // const [selectedId, setSelectedId] = useState(null); // dùng cho search product -> ko dùng nữa, chuyển sang dùng prop từ layout
   // State để theo dõi ID của danh mục đang được chọn (null = Tất Cả)
   const [activeCategoryId, setActiveCategoryId] = useState(null);
   // State để theo dõi trạng thái tải dữ liệu
@@ -202,9 +207,21 @@ const ListProducts_SP = () => {
           .order("id", { ascending: true });
 
         // Lọc theo category_id nếu có danh mục được chọn
-        if (activeCategoryId !== null) {
-          query = query.eq("category_id", activeCategoryId);
-        }
+        // if (activeCategoryId !== null) {
+        //   query = query.eq("category_id", activeCategoryId);
+        // }
+           // 1️⃣ Nếu click search → chỉ lọc theo selectedId
+      if (selectedId !== null) {
+        query = query.eq("id", selectedId);
+      } 
+      // 2️⃣ Nếu không click search → lọc theo category
+      else if (activeCategoryId !== null) {
+        query = query.eq("category_id", activeCategoryId);
+      }
+        // // Tìm kiếm
+        // if (keyword.trim() !== "") {
+        //   query = query.ilike("title", `%${keyword}%`);
+        // }
 
         const { data, error } = await query;
 
@@ -218,7 +235,8 @@ const ListProducts_SP = () => {
       }
     };
     fetchProducts();
-  }, [activeCategoryId]);
+  }, [activeCategoryId, selectedId]); 
+  // phía trên đã bổ sung keyword cho thanh tìm kiếm sản phẩm
   // CÁC XỬ LÝ KHÁC
   // ------------------------------------
   // 3. LOGIC TÍNH TOÁN TÊN DANH MỤC HIỆN TẠI (SỬ DỤNG React.useMemo)
@@ -238,7 +256,7 @@ const ListProducts_SP = () => {
   // ------------------------------------
   const handleCategoryClick = (id) => {
     setActiveCategoryId(id);
-
+    setSelectedId(null); // ✅ bây giờ React biết setSelectedId là props (xử lí thanh tìm kiếm)
     // Cuộn mượt mà đến khu vực lưới sản phẩm sau khi cập nhật state
     setTimeout(() => {
       if (productGridRef.current) {

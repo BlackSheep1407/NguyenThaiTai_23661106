@@ -3,7 +3,6 @@ import { createClient } from "@supabase/supabase-js";
 const SUPABASE_URL = "https://rhdnydvtpyksbagesfxu.supabase.co";
 const SUPABASE_API_KEY = "sb_publishable_kjcKirCE8PEKLVyJQN1XYg_PEs6_DU7";
 
-
 export const supabase = createClient(SUPABASE_URL, SUPABASE_API_KEY);
 // //GỌI Supabase thủ công (mẫu cho file khác dùng)
 // const createSupabaseClient = (url, key) => {
