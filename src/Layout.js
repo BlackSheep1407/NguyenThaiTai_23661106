@@ -357,7 +357,7 @@ const Layout = () => {
               <ul class="ul1">
                 <li class="menu-box">
                   <a
-                    href="/#"
+                    href="/"
                     className="menu-item"
                     onClick={() => navigate("/")}
                   >
@@ -366,7 +366,7 @@ const Layout = () => {
                 </li>
                 <li class="menu-box">
                   <a
-                    href=""
+                    href="/san-pham"
                     className="menu-item"
                     onClick={() => navigate("/san-pham")}
                   >
