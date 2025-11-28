@@ -6,6 +6,8 @@ import Layout from "./Layout";
 // @ts-ignore
 import Products from "./Products";
 // @ts-ignore
+import ContactForm from "./ContactForm";
+// @ts-ignore
 import Chitietsanpham from "./Chitietsanpham";
 
 // @ts-ignore
@@ -46,6 +48,7 @@ export default function App() {
           {/* Trang chính (cho người dùng vãng lai) */}
           <Route index element={<ListProducts_SP />} />
           <Route path="san-pham" element={<Products />} />
+          <Route path="lien-he" element={<ContactForm/>} />
           <Route path="trang2" element={<Trang2 />} />
           {/* <Route path="sanpham/:id" element={<Chitietsanpham />} /> */}
           <Route path="/admin/edit/:id" element={<EditProduct />} />
