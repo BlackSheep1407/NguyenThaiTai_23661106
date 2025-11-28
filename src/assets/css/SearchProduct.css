@@ -2,82 +2,81 @@
 
 /* Container tổng */
 .search-container {
-    position: relative;
-    width: 250px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  /* Input tìm kiếm */
-  .search-container input {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    padding: 8px 12px;
-    outline: none;
-    font-size: 14px;
-    transition: all 0.2s;
-  }
-  
-  .search-container input:focus {
-    border-color: #457b9d;
-    box-shadow: 0 0 8px rgba(69,123,157,0.3);
-  }
-  
-  /* Dropdown gợi ý */
-  .search-container ul {
-    position: absolute;
-    top: 42px; /* cách input một khoảng */
-    left: 0;
-    width: 100%;
-    /* background-color: #493628; */
-    background-color: #6d5646;
-    border-radius: 12px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    max-height: 250px;
-    overflow-y: auto;
-    z-index: 100;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  }
-  
-  /* Item trong dropdown */
-  .search-container ul li {
-    padding: 10px 14px;
-    cursor: pointer;
-    color: #fff;
-    font-size: 14px;
-    transition: all 0.2s;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-  
-  /* Hover item */
-  .search-container ul li:hover {
-    /* background-color: #65707f; */
-    background-color: #73af6f;
-    color: #fff;
-    /* color: black; */
-    font-weight: bold;
-    border-radius: 8px;
-  }
-  
-  /* Cuối cùng item không có border-bottom */
-  .search-container ul li:last-child {
-    border-bottom: none;
-  }
-  
-  /* Scrollbar đẹp cho dropdown */
-  .search-container ul::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .search-container ul::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-  }
-  
-  .search-container ul::-webkit-scrollbar-thumb {
-    background-color: rgba(255,255,255,0.3);
-    border-radius: 10px;
-  }
-  
+  position: relative;
+  width: 230px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Input tìm kiếm */
+.search-container input {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 8px 12px;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.search-container input:focus {
+  border-color: #457b9d;
+  box-shadow: 0 0 8px rgba(69, 123, 157, 0.3);
+}
+
+/* Dropdown gợi ý */
+.search-container ul {
+  position: absolute;
+  top: 42px; /* cách input một khoảng */
+  left: 0;
+  width: 100%;
+  /* background-color: #493628; */
+  background-color: #6d5646;
+  border-radius: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Item trong dropdown */
+.search-container ul li {
+  padding: 10px 14px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 14px;
+  transition: all 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Hover item */
+.search-container ul li:hover {
+  /* background-color: #65707f; */
+  background-color: #73af6f;
+  color: #fff;
+  /* color: black; */
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+/* Cuối cùng item không có border-bottom */
+.search-container ul li:last-child {
+  border-bottom: none;
+}
+
+/* Scrollbar đẹp cho dropdown */
+.search-container ul::-webkit-scrollbar {
+  width: 6px;
+}
+
+.search-container ul::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.search-container ul::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}

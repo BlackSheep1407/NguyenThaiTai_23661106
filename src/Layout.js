@@ -240,9 +240,16 @@ import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import SearchProduct from "./SearchProduct";
 import ListProducts_SP from "./ListProducts_SP"; //Import con vào để nó nhận prop từ cha và xử lí cho thanh tìm kiếm (của cha)
+import CartModal from "./CartModal"; //Giỏ hàng
+import { useCart } from "./CartContext";
+import { FaShoppingCart } from "react-icons/fa"; // dùng react-icons
 
 const Layout = () => {
   const [user, setUser] = useState(null);
+  // giỏ hàng
+  const { cart } = useCart();
+  const [isCartOpen, setIsCartOpen] = useState(false); // Lưu sản phẩm trong giỏ hàn
+
   const navigate = useNavigate();
   // ✅ ĐÃ THÊM: Khai báo biến categories để tránh lỗi "categories is not defined"
   const [categories, setCategories] = useState([]);
@@ -329,6 +336,12 @@ const Layout = () => {
   //     productGridRef.current.scrollIntoView({ behavior: "smooth" });
   //   }
   // };
+  // ===============================================
+  // Chuyển đến trang giỏ hàng
+  // ===============================================
+  const goToCart = () => {
+    navigate("/cart");
+  };
 
   return (
     <html>
@@ -455,6 +468,64 @@ const Layout = () => {
               </div> */}
               <SearchProduct onSelect={(id) => setSelectedId(id)} />
 
+
+              {/* Giỏ hàng */}
+              {/* Icon giỏ hàng với số lượng */}
+              {/* <div
+                style={{
+                  position: "relative",
+                  cursor: "pointer",
+                  marginRight: "15px",
+                }}
+                onClick={goToCart}
+              >
+                <FaShoppingCart size={24} color="#fff" />
+                {cart.length > 0 && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "-8px",
+                      right: "-8px",
+                      backgroundColor: "#e63946",
+                      color: "#fff",
+                      borderRadius: "50%",
+                      padding: "2px 6px",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {cart.length}
+                  </span>
+                )}
+              </div> */}
+              {/* <div
+          style={{ position: "relative", cursor: "pointer" }}
+          onClick={() => setIsCartOpen(true)}
+        >
+          <FaShoppingCart size={24} color="#fff" />
+          {cart.length > 0 && (
+            <span
+              style={{
+                position: "absolute",
+                top: "-8px",
+                right: "-8px",
+                backgroundColor: "#e63946",
+                color: "#fff",
+                borderRadius: "50%",
+                padding: "2px 6px",
+                fontSize: "12px",
+                fontWeight: "bold",
+              }}
+            >
+              {cart.length}
+            </span>
+          )}
+        </div> */}
+         <div onClick={() => setIsCartOpen(true)} style={{ position: "relative", cursor: "pointer" }}>
+            <FaShoppingCart size={24} color="#000" />
+            {cart.length > 0 && <span style={{ position: "absolute", top: -8, right: -8, backgroundColor: "red", color: "#fff", borderRadius: "50%", padding: "2px 6px" }}>{cart.length}</span>}
+          </div>
+
               {/* 📏 ĐƯỜNG PHÂN CÁCH DỌC ĐÃ THÊM */}
               <span
                 class="vertical-separator"
@@ -492,9 +563,12 @@ const Layout = () => {
           {/* Phần hiển thị sản phẩm (new one) */}
           {/* <SearchProduct onSelect={(id) => setSelectedId(id)} /> */}
           {/* <ListProducts_SP selectedId={selectedId} setSelectedId={setSelectedId} /> */}
-          {/* Phần hiển thị sản phẩm (old one) */}
-          {/* <Outlet /> */}
-          <Outlet context={{ selectedId, setSelectedId }} />
+          
+                {/* Phần hiển thị sản phẩm (old one) */}
+                {/* <Outlet /> */}
+                <Outlet context={{ selectedId, setSelectedId }} />
+          
+                <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         </div>
       </body>
       <footer>

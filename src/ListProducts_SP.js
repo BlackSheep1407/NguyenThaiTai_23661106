@@ -104,6 +104,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
 import { useOutletContext } from "react-router-dom";
+import { useCart } from "./CartContext"; //Giỏ hàng
 
 // Hàm tiện ích để định dạng tiền tệ Việt Nam (30000 -> 30.000đ)
 const formatCurrency = (amount) => {
@@ -119,25 +120,25 @@ const formatCurrency = (amount) => {
   ); // Thêm ký hiệu 'đ' sau khi định dạng
 };
 
-  // * Chuyển đổi chuỗi có dấu thành slug (dạng URL thân thiện).
-  // * Ví dụ: "Xoài Cát Chu ngon" -> "xoai-cat-chu-ngon"
-  // * @param {string} text 
-  // * @returns {string} Slug đã được tạo.
-  // */
-  const slugify = (text) => {
-    if (!text) return '';
-    return text
-      .toString()
-      .toLowerCase()
-      .normalize('NFD') // Tách các ký tự có dấu thành ký tự cơ bản và dấu phụ
-      .replace(/[\u0300-\u036f]/g, '') // Loại bỏ dấu phụ (như ´, `, ...)
-      .replace(/đ/g, 'd') // Xử lý chữ đ
-      .replace(/ /g, '-') // Thay thế khoảng trắng bằng dấu gạch ngang
-      .replace(/[^\w-]+/g, '') // Loại bỏ tất cả ký tự không phải chữ, số hoặc gạch ngang
-      .replace(/--+/g, '-') // Thay thế nhiều dấu gạch ngang liền kề bằng một dấu gạch ngang
-      .trim()
-      .replace(/^-+|-+$/g, ''); // Loại bỏ gạch ngang ở đầu hoặc cuối
-  };
+// * Chuyển đổi chuỗi có dấu thành slug (dạng URL thân thiện).
+// * Ví dụ: "Xoài Cát Chu ngon" -> "xoai-cat-chu-ngon"
+// * @param {string} text
+// * @returns {string} Slug đã được tạo.
+// */
+const slugify = (text) => {
+  if (!text) return "";
+  return text
+    .toString()
+    .toLowerCase()
+    .normalize("NFD") // Tách các ký tự có dấu thành ký tự cơ bản và dấu phụ
+    .replace(/[\u0300-\u036f]/g, "") // Loại bỏ dấu phụ (như ´, `, ...)
+    .replace(/đ/g, "d") // Xử lý chữ đ
+    .replace(/ /g, "-") // Thay thế khoảng trắng bằng dấu gạch ngang
+    .replace(/[^\w-]+/g, "") // Loại bỏ tất cả ký tự không phải chữ, số hoặc gạch ngang
+    .replace(/--+/g, "-") // Thay thế nhiều dấu gạch ngang liền kề bằng một dấu gạch ngang
+    .trim()
+    .replace(/^-+|-+$/g, ""); // Loại bỏ gạch ngang ở đầu hoặc cuối
+};
 
 // const ListProducts_SP = ({ selectedId, setSelectedId }) => {
 const ListProducts_SP = () => {
@@ -147,7 +148,7 @@ const ListProducts_SP = () => {
 
   // State để lưu trữ danh sách các danh mục (ví dụ: Rau Củ, Hải Sản)
   const [categories, setCategories] = useState([]);
-  //State thanh tìm kiếm 
+  //State thanh tìm kiếm
   // const [selectedId, setSelectedId] = useState(null); // dùng cho search product -> ko dùng nữa, chuyển sang dùng prop từ layout
   // State để theo dõi ID của danh mục đang được chọn (null = Tất Cả)
   const [activeCategoryId, setActiveCategoryId] = useState(null);
@@ -156,6 +157,8 @@ const ListProducts_SP = () => {
 
   const [listProduct, setListProduct] = useState([]);
   const navigate = useNavigate();
+  //Giỏ hàng
+  const { addToCart } = useCart();
 
   // useEffect(() => {
   //   const fetchProducts = async () => {
@@ -210,14 +213,14 @@ const ListProducts_SP = () => {
         // if (activeCategoryId !== null) {
         //   query = query.eq("category_id", activeCategoryId);
         // }
-           // 1️⃣ Nếu click search → chỉ lọc theo selectedId
-      if (selectedId !== null) {
-        query = query.eq("id", selectedId);
-      } 
-      // 2️⃣ Nếu không click search → lọc theo category
-      else if (activeCategoryId !== null) {
-        query = query.eq("category_id", activeCategoryId);
-      }
+        // 1️⃣ Nếu click search → chỉ lọc theo selectedId
+        if (selectedId !== null) {
+          query = query.eq("id", selectedId);
+        }
+        // 2️⃣ Nếu không click search → lọc theo category
+        else if (activeCategoryId !== null) {
+          query = query.eq("category_id", activeCategoryId);
+        }
         // // Tìm kiếm
         // if (keyword.trim() !== "") {
         //   query = query.ilike("title", `%${keyword}%`);
@@ -235,7 +238,7 @@ const ListProducts_SP = () => {
       }
     };
     fetchProducts();
-  }, [activeCategoryId, selectedId]); 
+  }, [activeCategoryId, selectedId]);
   // phía trên đã bổ sung keyword cho thanh tìm kiếm sản phẩm
   // CÁC XỬ LÝ KHÁC
   // ------------------------------------
@@ -268,6 +271,24 @@ const ListProducts_SP = () => {
       }
     }, 50); // Độ trễ nhỏ để đảm bảo state đã cập nhật
   };
+
+  // ------------------------------------
+  // 5.Thêm sản phẩm vào giỏ hàng
+  // ------------------------------------
+  // const addToCart = (product) => {
+  //   let storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+  //   storedCart.push(product); // Thêm sản phẩm vào giỏ
+  //   localStorage.setItem("cart", JSON.stringify(storedCart));
+  //   setCart(storedCart); // Nếu bạn truyền setCart từ Layout xuống, cập nhật luôn state để badge số lượng cập nhật
+  // };
+  // const addToCart = (product) => {
+  //   let storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+  //   storedCart.push(product); // thêm sản phẩm
+  //   localStorage.setItem("cart", JSON.stringify(storedCart));
+
+  //   alert("Đã thêm vào giỏ hàng!");
+  // };
+  
 
   return (
     <div class="container_main" style={{ padding: "20px" }}>
@@ -374,7 +395,8 @@ const ListProducts_SP = () => {
               color: "#e63946",
             }}
           >
-             🥺 Không tìm thấy sản phẩm nào trong danh mục **{activeCategoryName}**
+            🥺 Không tìm thấy sản phẩm nào trong danh mục **{activeCategoryName}
+            **
           </div>
         ) : (
           <div
@@ -475,6 +497,27 @@ const ListProducts_SP = () => {
                   </span>{" "}
                   {p.rating_rate} | ({p.rating_count} đánh giá)
                 </small>
+
+                {/* nút thêm sản phẩm */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation(); // 🚫 chặn click lan lên Card
+                    addToCart(p);
+                  }}
+                  style={{
+                    marginTop: "8px",
+                    // backgroundColor: "#457b9d",
+                    backgroundColor: "#73af6f",
+                    color: "#fff",
+                    border: "none",
+                    padding: "6px 12px",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Thêm vào giỏ hàng
+                </button>
+                {/* kết thúc nút thêm sản phẩm */}
               </div>
             ))}
           </div>
