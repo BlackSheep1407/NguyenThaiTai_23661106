@@ -468,7 +468,6 @@ const Layout = () => {
               </div> */}
               <SearchProduct onSelect={(id) => setSelectedId(id)} />
 
-
               {/* Giỏ hàng */}
               {/* Icon giỏ hàng với số lượng */}
               {/* <div
@@ -521,10 +520,32 @@ const Layout = () => {
             </span>
           )}
         </div> */}
-         <div onClick={() => setIsCartOpen(true)} style={{ position: "relative", cursor: "pointer" }}>
-            <FaShoppingCart size={24} color="#000" />
-            {cart.length > 0 && <span style={{ position: "absolute", top: -8, right: -8, backgroundColor: "red", color: "#fff", borderRadius: "50%", padding: "2px 6px" }}>{cart.length}</span>}
-          </div>
+              <div
+                onClick={() => setIsCartOpen(true)}
+                style={{ position: "relative", cursor: "pointer" }}
+              >
+                <FaShoppingCart size={24} color="#000" />
+                {cart.length > 0 && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: -8,
+                      right: -8,
+                      backgroundColor: "red",
+                      color: "#fff",
+                      borderRadius: "50%",
+                      padding: "2px 6px",
+                    }}
+                  >
+                    {cart.length}
+                  </span>
+                )}
+              </div>
+
+              <CartModal
+                isOpen={isCartOpen}
+                onClose={() => setIsCartOpen(false)}
+              />
 
               {/* 📏 ĐƯỜNG PHÂN CÁCH DỌC ĐÃ THÊM */}
               <span
@@ -563,12 +584,10 @@ const Layout = () => {
           {/* Phần hiển thị sản phẩm (new one) */}
           {/* <SearchProduct onSelect={(id) => setSelectedId(id)} /> */}
           {/* <ListProducts_SP selectedId={selectedId} setSelectedId={setSelectedId} /> */}
-          
-                {/* Phần hiển thị sản phẩm (old one) */}
-                {/* <Outlet /> */}
-                <Outlet context={{ selectedId, setSelectedId }} />
-          
-                <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+
+          {/* Phần hiển thị sản phẩm (old one) */}
+          {/* <Outlet /> */}
+          <Outlet context={{ selectedId, setSelectedId }} />
         </div>
       </body>
       <footer>
