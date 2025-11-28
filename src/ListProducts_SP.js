@@ -163,7 +163,6 @@
 //   // Pops up thêm vào giỏ hàng (Toast)
 //   const [toast, setToast] = useState(null);
 
-  
 //   // useEffect(() => {
 //   //   const fetchProducts = async () => {
 //   //     try {
@@ -561,17 +560,20 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { supabase } from "./supabaseClient";
 import { useCart } from "./CartContext";
-import Toast from "./Toast"; // import Toast
+//pops up thêm sản phẩm
+import ToastStack from "./ToastStack";
 import "./assets/css/keyframes_additem.css";
 
 // Hàm format tiền Việt Nam
 const formatCurrency = (amount) => {
   if (!amount) return "";
-  return new Intl.NumberFormat("vi-VN", {
-    style: "decimal",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(amount) + "đ";
+  return (
+    new Intl.NumberFormat("vi-VN", {
+      style: "decimal",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount) + "đ"
+  );
 };
 
 const ListProducts_SP = () => {
@@ -581,7 +583,7 @@ const ListProducts_SP = () => {
   const [activeCategoryId, setActiveCategoryId] = useState(null);
   const [listProduct, setListProduct] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [toast, setToast] = useState(null);
+  const [toasts, setToasts] = useState([]);
 
   const navigate = useNavigate();
   const { addToCart, cart } = useCart(); // ✅ dùng addItem đúng context
@@ -608,10 +610,14 @@ const ListProducts_SP = () => {
     const fetchProducts = async () => {
       setIsLoading(true);
       try {
-        let query = supabase.from("products").select("*").order("id", { ascending: true });
+        let query = supabase
+          .from("products")
+          .select("*")
+          .order("id", { ascending: true });
 
         if (selectedId !== null) query = query.eq("id", selectedId);
-        else if (activeCategoryId !== null) query = query.eq("category_id", activeCategoryId);
+        else if (activeCategoryId !== null)
+          query = query.eq("category_id", activeCategoryId);
 
         const { data, error } = await query;
         if (error) throw error;
@@ -626,13 +632,15 @@ const ListProducts_SP = () => {
     fetchProducts();
   }, [activeCategoryId, selectedId]);
 
-  // Toast tự ẩn sau 2s
-  useEffect(() => {
-    if (toast) {
-      const timer = setTimeout(() => setToast(null), 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [toast]);
+  //Pops up thêm sản phẩm
+  const addToast = (message) => {
+    const id = Date.now();
+    setToasts((prev) => [...prev, { id, message }]);
+  };
+  // xóa toast
+  const removeToast = (id) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
 
   const activeCategoryName = useMemo(() => {
     if (activeCategoryId === null) return "Tất Cả Sản Phẩm";
@@ -645,19 +653,38 @@ const ListProducts_SP = () => {
     setSelectedId(null);
     setTimeout(() => {
       if (productGridRef.current) {
-        productGridRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        productGridRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
       }
     }, 50);
   };
 
+  const [isHover, setIsHover] = useState(false); // state hover cho mỗi nút
+
   return (
     <div className="container_main" style={{ padding: "20px" }}>
-      <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "15px", color: "#1d3557" }}>
+      <h2
+        style={{
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+          marginBottom: "15px",
+          color: "#1d3557",
+        }}
+      >
         {activeCategoryName}
       </h2>
 
       {/* Danh mục */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "20px" }}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "10px",
+          marginBottom: "20px",
+        }}
+      >
         <button
           onClick={() => handleCategoryClick(null)}
           style={{
@@ -699,12 +726,27 @@ const ListProducts_SP = () => {
       {/* Lưới sản phẩm */}
       <div ref={productGridRef} style={{ minHeight: "300px" }}>
         {isLoading ? (
-          <div style={{ textAlign: "center", padding: "30px", fontSize: "1rem", color: "#555" }}>
+          <div
+            style={{
+              textAlign: "center",
+              padding: "30px",
+              fontSize: "1rem",
+              color: "#555",
+            }}
+          >
             Đang tải sản phẩm...
           </div>
         ) : listProduct.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "30px", fontSize: "1rem", color: "#e63946" }}>
-            🥺 Không tìm thấy sản phẩm nào trong danh mục <b>{activeCategoryName}</b>
+          <div
+            style={{
+              textAlign: "center",
+              padding: "30px",
+              fontSize: "1rem",
+              color: "#e63946",
+            }}
+          >
+            🥺 Không tìm thấy sản phẩm nào trong danh mục{" "}
+            <b>{activeCategoryName}</b>
           </div>
         ) : (
           <div
@@ -730,7 +772,8 @@ const ListProducts_SP = () => {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-4px)";
-                  e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
+                  e.currentTarget.style.boxShadow =
+                    "0 4px 12px rgba(0,0,0,0.15)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "translateY(0)";
@@ -752,12 +795,20 @@ const ListProducts_SP = () => {
                   }}
                 >
                   <img
-                    src={p.image || "https://placehold.co/220x200/9b9b9b/ffffff?text=No+Image"}
+                    src={
+                      p.image ||
+                      "https://placehold.co/220x200/9b9b9b/ffffff?text=No+Image"
+                    }
                     alt={p.title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = "https://placehold.co/220x200/9b9b9b/ffffff?text=Image+Error";
+                      e.target.src =
+                        "https://placehold.co/220x200/9b9b9b/ffffff?text=Image+Error";
                     }}
                   />
                 </div>
@@ -778,12 +829,27 @@ const ListProducts_SP = () => {
                   {p.title}
                 </h4>
 
-                <p style={{ color: "#e63946", fontWeight: "bold", margin: "0 0 5px 0", fontSize: "1.1rem" }}>
+                <p
+                  style={{
+                    color: "#e63946",
+                    fontWeight: "bold",
+                    margin: "0 0 5px 0",
+                    fontSize: "1.1rem",
+                  }}
+                >
                   {formatCurrency(p.price)}
                 </p>
-
+                {/* -------------------------------------------------------------------------------- */}
+                <small style={{ color: "#555", display: "block" }}>
+                  {" "}
+                  <span style={{ color: "#ffc107", marginRight: "5px" }}>
+                    ★{" "}
+                  </span>{" "}
+                  {p.rating_rate} | ({p.rating_count} đánh giá){" "}
+                </small>
+                {/* -------------------------------------------------------------------------------- */}
                 {/* Nút thêm vào giỏ hàng */}
-                <button
+                {/* <button
                   onClick={(e) => {
                     e.stopPropagation();
                     addToCart({
@@ -805,15 +871,44 @@ const ListProducts_SP = () => {
                   }}
                 >
                   Thêm vào giỏ hàng
+                </button> */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addToCart({
+                      id: p.id,
+                      name: p.title,
+                      price: p.price,
+                      image: p.image,
+                    });
+                    addToast(`${p.title} đã thêm vào giỏ hàng!`);
+                  }}
+                  onMouseEnter={() => setIsHover(true)}
+                  onMouseLeave={() => setIsHover(false)}
+                  style={{
+                    background: isHover ? "#5f9961" : "#73af6f",
+                    color: "#fff",
+                    border: "none",
+                    padding: "8px 14px",
+                    borderRadius: 6,
+                    marginTop: 8,
+                    cursor: "pointer",
+                    transform: isHover ? "translateY(-2px)" : "translateY(0)",
+                    transition: "background 0.3s ease, transform 0.2s ease",
+                  }}
+                >
+                  Thêm vào giỏ hàng
                 </button>
 
                 {/* Toast slide */}
+
                 {/* {toast && <Toast message={toast} onClose={() => setToast(null)} />} */}
               </div>
             ))}
           </div>
         )}
       </div>
+      <ToastStack toasts={toasts} removeToast={removeToast} />
     </div>
   );
 };

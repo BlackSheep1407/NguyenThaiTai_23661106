@@ -169,8 +169,6 @@
 
 // export default CartModal;
 
-
-
 //CODE GIỎ HÀNG MỚI
 // import React, { useState } from "react";
 // import { useCart } from "./CartContext";
@@ -394,13 +392,20 @@ import { useCart } from "./CartContext";
 import { FaTimes, FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 
 const CartModal = ({ isOpen, onClose }) => {
-  const { cart, updateQuantity, removeFromCart, totalPrice, clearCart, totalItems } = useCart();
+  const {
+    cart,
+    updateQuantity,
+    removeFromCart,
+    totalPrice,
+    clearCart,
+    totalItems,
+  } = useCart();
   const [animatingId, setAnimatingId] = useState(null);
 
   if (!isOpen) return null;
 
   const handleQuantityChange = (id, newQty) => {
-    if (newQty < 1) return; // không cho <1
+    // if (newQty < 1) return; // không cho <1
     setAnimatingId(id);
     updateQuantity(id, newQty); // gọi thẳng từ context
     setTimeout(() => setAnimatingId(null), 150); // hiệu ứng scale
@@ -453,7 +458,9 @@ const CartModal = ({ isOpen, onClose }) => {
         <hr style={{ marginBottom: 15 }} />
 
         {cart.length === 0 ? (
-          <p style={{ textAlign: "center", marginTop: 50 }}>Chưa có sản phẩm nào</p>
+          <p style={{ textAlign: "center", marginTop: 50 }}>
+            Chưa có sản phẩm nào
+          </p>
         ) : (
           cart.map((item) => (
             <div
@@ -478,16 +485,30 @@ const CartModal = ({ isOpen, onClose }) => {
               <img
                 src={item.image}
                 alt={item.name}
-                style={{ width: 70, height: 70, borderRadius: 8, objectFit: "cover" }}
+                style={{
+                  width: 70,
+                  height: 70,
+                  borderRadius: 8,
+                  objectFit: "cover",
+                }}
               />
 
               <div style={{ flex: 1 }}>
                 <b>{item.name}</b>
                 <p>{item.price.toLocaleString()} VNĐ</p>
 
-                <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 5 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                    marginTop: 5,
+                  }}
+                >
                   <button
-                    onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                    onClick={() =>
+                      handleQuantityChange(item.id, item.quantity - 1)
+                    }
                     style={{
                       padding: "6px",
                       borderRadius: "4px",
@@ -509,7 +530,8 @@ const CartModal = ({ isOpen, onClose }) => {
                       textAlign: "center",
                       fontWeight: "bold",
                       display: "inline-block",
-                      transform: animatingId === item.id ? "scale(1.4)" : "scale(1)",
+                      transform:
+                        animatingId === item.id ? "scale(1.4)" : "scale(1)",
                       transition: "transform 0.15s",
                     }}
                   >
@@ -517,7 +539,9 @@ const CartModal = ({ isOpen, onClose }) => {
                   </span>
 
                   <button
-                    onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                    onClick={() =>
+                      handleQuantityChange(item.id, item.quantity + 1)
+                    }
                     style={{
                       padding: "6px",
                       borderRadius: "4px",
@@ -551,7 +575,9 @@ const CartModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              <div style={{ minWidth: 80, textAlign: "right", fontWeight: "bold" }}>
+              <div
+                style={{ minWidth: 80, textAlign: "right", fontWeight: "bold" }}
+              >
                 {(item.price * item.quantity).toLocaleString()} VNĐ
               </div>
             </div>
@@ -604,4 +630,3 @@ const CartModal = ({ isOpen, onClose }) => {
 };
 
 export default CartModal;
-

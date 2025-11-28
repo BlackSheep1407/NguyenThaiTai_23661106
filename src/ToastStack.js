@@ -33,7 +33,7 @@ import React, { useEffect } from "react";
 
 const Toast = ({ id, message, onClose }) => {
   useEffect(() => {
-    const timer = setTimeout(() => onClose(id), 2000); // tự ẩn 2s
+    const timer = setTimeout(() => onClose(id), 1000); // tự ẩn 2s :2000
     return () => clearTimeout(timer);
   }, [id, onClose]);
 
@@ -75,4 +75,3 @@ const ToastStack = ({ toasts, removeToast }) => {
 };
 
 export default ToastStack;
-
