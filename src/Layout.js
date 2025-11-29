@@ -818,9 +818,29 @@ const Layout = () => {
           <Outlet context={{ selectedId, setSelectedId }} />
         </div>
       </div>
-
-      <footer>
-        <p>© 2025 Cửa Hàng Trái Cây 2TFresh</p>
+      {/* FOOTER */}
+      <footer className="footer">
+        <div className="footer-container">
+          <div className="footer-info">
+            <h3>2TFresh - Cửa Hàng Trái Cây</h3>
+            <p>Địa chỉ: 123 Đường ABC, Quận XYZ, TP. HCM</p>
+            <p>Email: contact@2tfresh.com | Hotline: 0900 123 456</p>
+          </div>
+          <div className="footer-map">
+            <iframe
+              title="map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.123456!2d106.123456!3d10.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f123456789%3A0xabcdef123456789!2s2TFresh!5e0!3m2!1svi!2s!4v1699999999999"
+              width="100%"
+              height="150"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <p>© 2025 Cửa Hàng Trái Cây 2TFresh. All rights reserved.</p>
+        </div>
       </footer>
     </>
   );
