@@ -562,7 +562,6 @@ import { supabase } from "./supabaseClient";
 import { useCart } from "./CartContext";
 //pops up thêm sản phẩm
 import ToastStack from "./ToastStack";
-import "./assets/css/keyframes_additem.css";
 
 // Hàm format tiền Việt Nam
 const formatCurrency = (amount) => {
