@@ -701,9 +701,8 @@ const Layout = () => {
                         style={{ height: "auto" }}
                       >
                         {/* Sử dụng thẻ <a> để cuộn xuống section nếu ở trang chủ */}
-                        <a href={`/category-${cat.categories_id}`}>
-                          {cat.name}
-                        </a>
+                        {/* <a href={`/category-${cat.categories_id}`}> */}
+                        <a onClick={() => navigate("/")}>{cat.name}</a>
                       </li>
                     ))
                   ) : (
