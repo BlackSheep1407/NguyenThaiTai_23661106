@@ -258,6 +258,26 @@
 
 import React, { useState } from 'react';
 
+// Cần thêm CSS cho animation rung nhẹ (vibrate)
+const customStyles = `
+  @keyframes vibrate {
+    0% { transform: translate(1px, 1px); }
+    10% { transform: translate(-1px, -2px); }
+    20% { transform: translate(-3px, 0px); }
+    30% { transform: translate(3px, 2px); }
+    40% { transform: translate(1px, -1px); }
+    50% { transform: translate(-1px, 2px); }
+    60% { transform: translate(-3px, 1px); }
+    70% { transform: translate(3px, 1px); }
+    80% { transform: translate(-1px, -1px); }
+    90% { transform: translate(1px, 2px); }
+    100% { transform: translate(1px, -2px); }
+  }
+  .vibrate-pulse {
+    animation: pulse 1.5s infinite, vibrate 0.5s infinite;
+  }
+`;
+
 // --- Cấu hình thông tin Liên hệ Nhanh ---
 const CONTACT_INFO = {
   ZALO_PHONE: '0901234567',
@@ -286,30 +306,38 @@ const MapIcon = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-// --- Floating Buttons (Đã thêm prefix !important để ghi đè CSS bên ngoài) ---
+// --- Floating Buttons (Sử dụng Inline Styles và Custom CSS Animation) ---
 const FloatingContactButtons = () => {
   return (
-    // Dùng !important (ví dụ: !z-[100]) cho các thuộc tính vị trí quan trọng
-    <div className="fixed !bottom-6 !right-6 flex flex-col space-y-4 !z-[100] md:!right-8 md:!bottom-8">
-      
-      {/* Bản đồ/Địa chỉ (Màu Đỏ) */}
-      <a href={CONTACT_INFO.MAP_LINK} target="_blank" rel="noopener noreferrer" title="Tìm trên Bản đồ"
-        className="p-3 !rounded-full !bg-red-600 !text-white !shadow-2xl hover:!bg-red-700 hover:scale-110 !transition-transform !duration-300 transform !origin-bottom-right">
-        <MapIcon />
-      </a>
-      
-      {/* Messenger (Màu Xanh Facebook) */}
-      <a href={CONTACT_INFO.MESSENGER_LINK} target="_blank" rel="noopener noreferrer" title="Chat qua Messenger"
-        className="p-3 !rounded-full !bg-blue-600 !text-white !shadow-2xl hover:!bg-blue-700 hover:scale-110 !transition-transform !duration-300 transform !origin-bottom-right">
-        <MessageIcon />
-      </a>
-      
-      {/* Zalo/Hotline (Màu Xanh Zalo - dùng animate-pulse) */}
-      <a href={`https://zalo.me/${CONTACT_INFO.ZALO_PHONE}`} target="_blank" rel="noopener noreferrer" title={`Chat hoặc Gọi Zalo: ${CONTACT_INFO.ZALO_PHONE}`}
-        className="p-3 !rounded-full !bg-sky-500 !text-white !shadow-2xl hover:!bg-sky-600 hover:scale-110 !transition-transform !duration-300 animate-pulse transform !origin-bottom-right">
-        <PhoneIcon />
-      </a>
-    </div>
+    <>
+      {/* Inject Custom CSS cho hiệu ứng rung (vibrate) */}
+      <style>{customStyles}</style>
+
+      {/* Dùng inline style cho vị trí và z-index để đảm bảo độ ưu tiên cao nhất */}
+      <div 
+          style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 9999 }} 
+          className="flex flex-col space-y-4 md:right-8 md:bottom-8"
+      >
+        
+        {/* Bản đồ/Địa chỉ (Màu Đỏ) */}
+        <a href={CONTACT_INFO.MAP_LINK} target="_blank" rel="noopener noreferrer" title="Tìm trên Bản đồ"
+          className="p-3 rounded-full bg-red-600 text-white shadow-xl hover:bg-red-700 hover:scale-110 transition-transform duration-300 transform origin-bottom-right">
+          <MapIcon />
+        </a>
+        
+        {/* Messenger (Màu Xanh Facebook) */}
+        <a href={CONTACT_INFO.MESSENGER_LINK} target="_blank" rel="noopener noreferrer" title="Chat qua Messenger"
+          className="p-3 rounded-full bg-blue-600 text-white shadow-xl hover:bg-blue-700 hover:scale-110 transition-transform duration-300 transform origin-bottom-right">
+          <MessageIcon />
+        </a>
+        
+        {/* Zalo/Hotline (Màu Xanh Zalo - sử dụng hiệu ứng rung và nhấp nháy kết hợp) */}
+        <a href={`https://zalo.me/${CONTACT_INFO.ZALO_PHONE}`} target="_blank" rel="noopener noreferrer" title={`Chat hoặc Gọi Zalo: ${CONTACT_INFO.ZALO_PHONE}`}
+          className="p-3 rounded-full bg-sky-500 text-white shadow-2xl hover:bg-sky-600 hover:scale-110 transition-transform duration-300 transform origin-bottom-right vibrate-pulse">
+          <PhoneIcon />
+        </a>
+      </div>
+    </>
   );
 };
 
@@ -415,7 +443,7 @@ const ContactForm = () => {
         <p className="text-center text-xs text-gray-400 mt-6">Chúng tôi cam kết bảo mật thông tin cá nhân của bạn.</p>
       </div>
 
-      {/* Floating Contact Buttons */}
+      {/* Floating Contact Buttons - Sử dụng Inline Style */}
       <FloatingContactButtons />
     </div>
   );
