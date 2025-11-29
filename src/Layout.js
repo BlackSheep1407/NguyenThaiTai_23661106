@@ -702,7 +702,7 @@ const Layout = () => {
                       >
                         {/* Sử dụng thẻ <a> để cuộn xuống section nếu ở trang chủ */}
                         {/* <a href={`/category-${cat.categories_id}`}> */}
-                        <a onClick={() => navigate("/")}>{cat.name}</a>
+                        <a href="/">{cat.name}</a>
                       </li>
                     ))
                   ) : (
