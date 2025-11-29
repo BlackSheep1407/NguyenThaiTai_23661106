@@ -193,12 +193,403 @@
 
 // export default ContactForm;
 
+// import React, { useState } from "react";
+
+// // --- CSS TÙY CHỈNH (INLINE) ĐÃ SỬA ---
+// // Định nghĩa cả pulse và vibrate để đảm bảo hiệu ứng hoạt động hoàn hảo
+// const customStyles = `
+//   /* Keyframes cho hiệu ứng rung nhẹ (vibrate) */
+//   @keyframes vibrate {
+//     0% { transform: translate(1px, 1px); }
+//     10% { transform: translate(-1px, -2px); }
+//     20% { transform: translate(-3px, 0px); }
+//     30% { transform: translate(3px, 2px); }
+//     40% { transform: translate(1px, -1px); }
+//     50% { transform: translate(-1px, 2px); }
+//     60% { transform: translate(-3px, 1px); }
+//     70% { transform: translate(3px, 1px); }
+//     80% { transform: translate(-1px, -1px); }
+//     90% { transform: translate(1px, 2px); }
+//     100% { transform: translate(1px, -2px); }
+//   }
+
+//   /* Keyframes cho hiệu ứng nhấp nháy (pulse) - Định nghĩa lại để đảm bảo hoạt động */
+//   @keyframes pulse {
+//     0%, 100% {
+//       opacity: 1;
+//     }
+//     50% {
+//       opacity: 0.5;
+//     }
+//   }
+
+//   /* Áp dụng hiệu ứng rung và nhấp nháy cho nút Zalo */
+//   .vibrate-pulse {
+//     /* Thay thế class pulse của Tailwind bằng keyframes đã định nghĩa rõ */
+//     animation:
+//         pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite,
+//         vibrate 0.3s linear infinite;
+//   }
+// `;
+
+// // --- Cấu hình thông tin Liên hệ Nhanh ---
+// const CONTACT_INFO = {
+//   ZALO_PHONE: "0901234567",
+//   MESSENGER_LINK: "https://m.me/yourpageid", // Thay thế bằng ID trang Facebook của bạn
+//   MAP_LINK: "https://maps.app.goo.gl/YourLocationID",
+//   BUSINESS_EMAIL: "support@example.com",
+// };
+
+// // --- SVG Icons ---
+
+// // Icon Zalo (Blue/White)
+// const ZaloIcon = ({ className = "w-6 h-6" }) => (
+//   <svg
+//     className={className}
+//     viewBox="0 0 24 24"
+//     fill="none"
+//     xmlns="http://www.w3.org/2000/svg"
+//   >
+//     <circle cx="12" cy="12" r="11" fill="#0068FF" />
+//     <path
+//       d="M7.74 15.66c-.15.42-.3.83-.45 1.25a.8.8 0 0 0 .96 1.05c.42-.04.83-.15 1.25-.26a7.6 7.6 0 0 0 5.8-3.05 7.6 7.6 0 0 0 1.25-4.52C16.5 5.92 14.1 4 12 4s-4.5 1.92-4.5 4.93a4.7 4.7 0 0 0 1.3 3.1 7.6 7.6 0 0 0 1.7 1.84 1.3 1.3 0 0 1-.36 1.26Z"
+//       fill="#fff"
+//     />
+//   </svg>
+// );
+
+// // Icon Messenger (Blue)
+// const MessengerIcon = ({ className = "w-6 h-6" }) => (
+//   <svg
+//     className={className}
+//     viewBox="0 0 24 24"
+//     fill="none"
+//     xmlns="http://www.w3.org/2000/svg"
+//   >
+//     <path
+//       d="M12 2C6.48 2 2 6.13 2 11.23c0 3.03 1.48 5.68 3.82 7.37L4 22l3.35-2.02c1.23.47 2.58.74 4.3.74 5.52 0 10-4.13 10-9.23S17.52 2 12 2zm1.5 11h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5z"
+//       fill="#0078FF"
+//     />
+//     <path d="M13.5 11.5v-3h-3v3h3z" fill="#fff" />
+//   </svg>
+// );
+
+// // Icon Map Location
+// const MapIcon = ({ className = "w-6 h-6" }) => (
+//   <svg
+//     xmlns="http://www.w3.org/2000/svg"
+//     width="24"
+//     height="24"
+//     viewBox="0 0 24 24"
+//     fill="none"
+//     stroke="currentColor"
+//     strokeWidth="2"
+//     strokeLinecap="round"
+//     strokeLinejoin="round"
+//     className={className}
+//   >
+//     <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+//     <circle cx="12" cy="10" r="3"></circle>
+//   </svg>
+// );
+
+// // --- Floating Buttons (Sử dụng Inline Styles và Custom CSS Animation) ---
+// const FloatingContactButtons = () => {
+//   return (
+//     <>
+//       {/* Inject Custom CSS cho animation (Đây là cách chuẩn nhất trong React 1 file) */}
+//       <style>{customStyles}</style>
+
+//       <div
+//         style={{
+//           position: "fixed",
+//           bottom: "24px",
+//           right: "24px",
+//           zIndex: 9999,
+//         }}
+//         className="flex flex-col space-y-4 md:right-8 md:bottom-8"
+//       >
+//         {/* Bản đồ/Địa chỉ (Màu Đỏ) */}
+//         <a
+//           href={CONTACT_INFO.MAP_LINK}
+//           target="_blank"
+//           rel="noopener noreferrer"
+//           title="Tìm trên Bản đồ"
+//           className="p-4 rounded-full bg-red-600 text-white shadow-xl hover:bg-red-700 hover:scale-110 transition-transform duration-300 transform origin-bottom-right"
+//         >
+//           <MapIcon className="w-6 h-6" />
+//         </a>
+
+//         {/* Messenger (Màu Xanh Facebook) */}
+//         <a
+//           href={CONTACT_INFO.MESSENGER_LINK}
+//           target="_blank"
+//           rel="noopener noreferrer"
+//           title="Chat qua Messenger"
+//           className="p-4 rounded-full bg-blue-600 text-white shadow-xl hover:bg-blue-700 hover:scale-110 transition-transform duration-300 transform origin-bottom-right"
+//         >
+//           <MessengerIcon className="w-6 h-6" />
+//         </a>
+
+//         {/* Zalo/Hotline (Màu Xanh Zalo) */}
+//         <a
+//           href={`https://zalo.me/${CONTACT_INFO.ZALO_PHONE}`}
+//           target="_blank"
+//           rel="noopener noreferrer"
+//           title={`Chat hoặc Gọi Zalo: ${CONTACT_INFO.ZALO_PHONE}`}
+//           // Sử dụng class vibrate-pulse đã định nghĩa trong customStyles
+//           className="p-4 rounded-full bg-sky-500 text-white shadow-2xl hover:bg-sky-600 hover:scale-110 transition-transform duration-300 transform origin-bottom-right vibrate-pulse"
+//         >
+//           <ZaloIcon className="w-6 h-6" />
+//         </a>
+//       </div>
+//     </>
+//   );
+// };
+
+// // --- Contact Form Component Chính ---
+// const ContactForm = () => {
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     email: "",
+//     subject: "",
+//     message: "",
+//   });
+//   const [loading, setLoading] = useState(false);
+//   const [status, setStatus] = useState(null);
+
+//   const handleChange = (e) =>
+//     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+//   // Mock API submission
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     setStatus(null);
+
+//     try {
+//       // Giả lập độ trễ của yêu cầu mạng
+//       await new Promise((resolve) => setTimeout(resolve, 2000));
+
+//       // Giả lập thành công
+//       setStatus({
+//         type: "success",
+//         message: "Cảm ơn bạn! Tin nhắn đã được gửi thành công.",
+//       });
+//       setFormData({ name: "", email: "", subject: "", message: "" });
+//     } catch {
+//       // Giả lập lỗi
+//       setStatus({
+//         type: "error",
+//         message:
+//           "Rất tiếc, có lỗi xảy ra. Vui lòng kiểm tra kết nối và thử lại.",
+//       });
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const StatusMessage = () => {
+//     if (!status) return null;
+//     const base = "p-4 mb-6 rounded-xl flex items-center shadow-md border";
+//     const classes =
+//       status.type === "success"
+//         ? base + " bg-green-50 text-green-700 border-green-300"
+//         : base + " bg-red-50 text-red-700 border-red-300";
+
+//     const icon =
+//       status.type === "success" ? (
+//         <svg
+//           className="h-5 w-5 mr-3 flex-shrink-0"
+//           fill="none"
+//           stroke="currentColor"
+//           strokeWidth="2"
+//           strokeLinecap="round"
+//           strokeLinejoin="round"
+//           viewBox="0 0 24 24"
+//         >
+//           <path d="M5 13l4 4L19 7"></path>
+//         </svg>
+//       ) : (
+//         <svg
+//           className="h-5 w-5 mr-3 flex-shrink-0"
+//           fill="none"
+//           stroke="currentColor"
+//           strokeWidth="2"
+//           strokeLinecap="round"
+//           strokeLinejoin="round"
+//           viewBox="0 0 24 24"
+//         >
+//           <path d="M6 18L18 6M6 6l12 12"></path>
+//         </svg>
+//       );
+
+//     return (
+//       <div className={classes} role="alert">
+//         <p className="flex items-center text-sm font-medium">
+//           {icon}
+//           <span className="font-semibold">{status.message}</span>
+//         </p>
+//       </div>
+//     );
+//   };
+
+//   return (
+//     // Toàn bộ các style giao diện đã là Tailwind CSS classes
+//     <div className="min-h-screen font-sans bg-gray-50 flex items-center justify-center p-4 md:p-8">
+//       {/* Form Container */}
+//       <div className="w-full max-w-2xl mx-auto bg-white p-6 sm:p-12 rounded-[28px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.2)] border border-gray-100">
+//         <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-2 leading-snug">
+//           Liên Hệ Với 2S Fresh Market
+//         </h1>
+//         <p className="text-center text-gray-500 mb-10 max-w-md mx-auto text-lg">
+//           Gửi yêu cầu hoặc sử dụng các nút chat nhanh.
+//         </p>
+
+//         <StatusMessage />
+
+//         <form onSubmit={handleSubmit} className="space-y-6">
+//           {/* Bố cục 2 cột cho màn hình lớn */}
+//           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//             {/* Input Họ và Tên */}
+//             <div className="relative">
+//               <label
+//                 htmlFor="name"
+//                 className="block text-sm font-medium text-gray-700 mb-1"
+//               >
+//                 Họ và Tên (*)
+//               </label>
+//               <input
+//                 type="text"
+//                 id="name"
+//                 name="name"
+//                 placeholder="Ví dụ: Nguyễn Văn A"
+//                 required
+//                 value={formData.name}
+//                 onChange={handleChange}
+//                 disabled={loading}
+//                 className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 bg-white text-gray-800"
+//               />
+//             </div>
+
+//             {/* Input Email */}
+//             <div className="relative">
+//               <label
+//                 htmlFor="email"
+//                 className="block text-sm font-medium text-gray-700 mb-1"
+//               >
+//                 Email (*)
+//               </label>
+//               <input
+//                 type="email"
+//                 id="email"
+//                 name="email"
+//                 placeholder="Ví dụ: hotro@freshmarket.vn"
+//                 required
+//                 value={formData.email}
+//                 onChange={handleChange}
+//                 disabled={loading}
+//                 className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 bg-white text-gray-800"
+//               />
+//             </div>
+//           </div>
+
+//           {/* Input Chủ đề */}
+//           <div className="relative">
+//             <label
+//               htmlFor="subject"
+//               className="block text-sm font-medium text-gray-700 mb-1"
+//             >
+//               Chủ đề
+//             </label>
+//             <input
+//               type="text"
+//               id="subject"
+//               name="subject"
+//               placeholder="Ví dụ: Vấn đề đổi trả hàng"
+//               value={formData.subject}
+//               onChange={handleChange}
+//               disabled={loading}
+//               className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 bg-white text-gray-800"
+//             />
+//           </div>
+
+//           {/* Textarea Nội dung */}
+//           <div className="relative">
+//             <label
+//               htmlFor="message"
+//               className="block text-sm font-medium text-gray-700 mb-1"
+//             >
+//               Nội dung chi tiết tin nhắn (*)
+//             </label>
+//             <textarea
+//               id="message"
+//               name="message"
+//               placeholder="Xin vui lòng mô tả chi tiết yêu cầu của bạn..."
+//               rows="6"
+//               required
+//               value={formData.message}
+//               onChange={handleChange}
+//               disabled={loading}
+//               className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 resize-none bg-white text-gray-800"
+//             />
+//           </div>
+
+//           {/* Nút Gửi */}
+//           <button
+//             type="submit"
+//             disabled={loading}
+//             className="w-full py-4 rounded-xl text-xl font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-xl shadow-indigo-400/50 hover:from-indigo-700 hover:to-purple-700 transition duration-300 ease-in-out transform hover:scale-[1.01] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mt-8"
+//           >
+//             {loading ? (
+//               <div className="flex items-center">
+//                 <svg
+//                   className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+//                   xmlns="http://www.w3.org/2000/svg"
+//                   fill="none"
+//                   viewBox="0 0 24 24"
+//                 >
+//                   <circle
+//                     className="opacity-25"
+//                     cx="12"
+//                     cy="12"
+//                     r="10"
+//                     stroke="currentColor"
+//                     strokeWidth="4"
+//                   ></circle>
+//                   <path
+//                     className="opacity-75"
+//                     fill="currentColor"
+//                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+//                   ></path>
+//                 </svg>
+//                 Đang Xử Lý...
+//               </div>
+//             ) : (
+//               "Gửi Yêu Cầu Hỗ Trợ Ngay"
+//             )}
+//           </button>
+//         </form>
+
+//         <p className="text-center text-sm text-gray-400 mt-8">
+//           Bằng việc gửi tin nhắn, bạn đồng ý với Chính sách Bảo mật của chúng
+//           tôi.
+//         </p>
+//       </div>
+
+//       {/* Floating Contact Buttons - Vị trí các nút liên hệ nổi */}
+//       <FloatingContactButtons />
+//     </div>
+//   );
+// };
+
+// export default ContactForm;
+
 import React, { useState } from "react";
 
-// --- CSS TÙY CHỈNH (INLINE) ĐÃ SỬA ---
-// Định nghĩa cả pulse và vibrate để đảm bảo hiệu ứng hoạt động hoàn hảo
+// --- CSS TÙY CHỈNH (INLINE) BẰNG CSS THUẦN ---
 const customStyles = `
-  /* Keyframes cho hiệu ứng rung nhẹ (vibrate) */
+  /* Keyframes cho hiệu ứng rung (vibrate) - ĐÃ GIẢM CƯỜNG ĐỘ */
   @keyframes vibrate {
     0% { transform: translate(1px, 1px); }
     10% { transform: translate(-1px, -2px); }
@@ -213,19 +604,20 @@ const customStyles = `
     100% { transform: translate(1px, -2px); }
   }
 
-  /* Keyframes cho hiệu ứng nhấp nháy (pulse) - Định nghĩa lại để đảm bảo hoạt động */
+  /* Keyframes cho hiệu ứng nhấp nháy (pulse) */
   @keyframes pulse {
     0%, 100% {
       opacity: 1;
+      box-shadow: 0 0 0 0 rgba(0, 198, 255, 0.8);
     }
     50% {
-      opacity: 0.5;
+      opacity: 0.7;
+      box-shadow: 0 0 0 10px rgba(0, 198, 255, 0);
     }
   }
 
   /* Áp dụng hiệu ứng rung và nhấp nháy cho nút Zalo */
   .vibrate-pulse {
-    /* Thay thế class pulse của Tailwind bằng keyframes đã định nghĩa rõ */
     animation: 
         pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite, 
         vibrate 0.3s linear infinite;
@@ -235,17 +627,18 @@ const customStyles = `
 // --- Cấu hình thông tin Liên hệ Nhanh ---
 const CONTACT_INFO = {
   ZALO_PHONE: "0901234567",
-  MESSENGER_LINK: "https://m.me/yourpageid", // Thay thế bằng ID trang Facebook của bạn
+  MESSENGER_LINK: "https://m.me/yourpageid",
   MAP_LINK: "https://maps.app.goo.gl/YourLocationID",
   BUSINESS_EMAIL: "support@example.com",
 };
 
-// --- SVG Icons ---
+// --- SVG Icons (Sử dụng kích thước cố định) ---
+const iconStyle = { width: "24px", height: "24px" };
 
 // Icon Zalo (Blue/White)
-const ZaloIcon = ({ className = "w-6 h-6" }) => (
+const ZaloIcon = ({ style }) => (
   <svg
-    className={className}
+    style={style}
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -259,23 +652,23 @@ const ZaloIcon = ({ className = "w-6 h-6" }) => (
 );
 
 // Icon Messenger (Blue)
-const MessengerIcon = ({ className = "w-6 h-6" }) => (
+const MessengerIcon = ({ style }) => (
   <svg
-    className={className}
+    style={style}
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
       d="M12 2C6.48 2 2 6.13 2 11.23c0 3.03 1.48 5.68 3.82 7.37L4 22l3.35-2.02c1.23.47 2.58.74 4.3.74 5.52 0 10-4.13 10-9.23S17.52 2 12 2zm1.5 11h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5z"
-      fill="#0078FF"
+      fill="#1d4ed8" // Blue-700
     />
     <path d="M13.5 11.5v-3h-3v3h3z" fill="#fff" />
   </svg>
 );
 
 // Icon Map Location
-const MapIcon = ({ className = "w-6 h-6" }) => (
+const MapIcon = ({ style }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -286,18 +679,37 @@ const MapIcon = ({ className = "w-6 h-6" }) => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={className}
+    style={style}
   >
     <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
     <circle cx="12" cy="10" r="3"></circle>
   </svg>
 );
 
-// --- Floating Buttons (Sử dụng Inline Styles và Custom CSS Animation) ---
+// --- Floating Buttons Component (Sử dụng CSS Thuần/Inline) ---
 const FloatingContactButtons = () => {
+  const buttonBaseStyle = {
+    padding: "16px",
+    borderRadius: "50%",
+    color: "white",
+    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.4)",
+    transition: "transform 0.3s ease-in-out",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textDecoration: "none",
+    cursor: "pointer",
+    width: "56px",
+    height: "56px",
+  };
+
+  const handleHover = (e, scale) => {
+    e.currentTarget.style.transform = `scale(${scale})`;
+  };
+
   return (
     <>
-      {/* Inject Custom CSS cho animation (Đây là cách chuẩn nhất trong React 1 file) */}
+      {/* Inject Custom CSS cho animation */}
       <style>{customStyles}</style>
 
       <div
@@ -306,8 +718,10 @@ const FloatingContactButtons = () => {
           bottom: "24px",
           right: "24px",
           zIndex: 9999,
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
         }}
-        className="flex flex-col space-y-4 md:right-8 md:bottom-8"
       >
         {/* Bản đồ/Địa chỉ (Màu Đỏ) */}
         <a
@@ -315,9 +729,14 @@ const FloatingContactButtons = () => {
           target="_blank"
           rel="noopener noreferrer"
           title="Tìm trên Bản đồ"
-          className="p-4 rounded-full bg-red-600 text-white shadow-xl hover:bg-red-700 hover:scale-110 transition-transform duration-300 transform origin-bottom-right"
+          style={{
+            ...buttonBaseStyle,
+            backgroundColor: "#dc2626", // Red-600
+          }}
+          onMouseEnter={(e) => handleHover(e, 1.1)}
+          onMouseLeave={(e) => handleHover(e, 1)}
         >
-          <MapIcon className="w-6 h-6" />
+          <MapIcon style={iconStyle} />
         </a>
 
         {/* Messenger (Màu Xanh Facebook) */}
@@ -326,9 +745,14 @@ const FloatingContactButtons = () => {
           target="_blank"
           rel="noopener noreferrer"
           title="Chat qua Messenger"
-          className="p-4 rounded-full bg-blue-600 text-white shadow-xl hover:bg-blue-700 hover:scale-110 transition-transform duration-300 transform origin-bottom-right"
+          style={{
+            ...buttonBaseStyle,
+            backgroundColor: "#1d4ed8", // Blue-700
+          }}
+          onMouseEnter={(e) => handleHover(e, 1.1)}
+          onMouseLeave={(e) => handleHover(e, 1)}
         >
-          <MessengerIcon className="w-6 h-6" />
+          <MessengerIcon style={iconStyle} />
         </a>
 
         {/* Zalo/Hotline (Màu Xanh Zalo) */}
@@ -337,17 +761,25 @@ const FloatingContactButtons = () => {
           target="_blank"
           rel="noopener noreferrer"
           title={`Chat hoặc Gọi Zalo: ${CONTACT_INFO.ZALO_PHONE}`}
-          // Sử dụng class vibrate-pulse đã định nghĩa trong customStyles
-          className="p-4 rounded-full bg-sky-500 text-white shadow-2xl hover:bg-sky-600 hover:scale-110 transition-transform duration-300 transform origin-bottom-right vibrate-pulse"
+          className="vibrate-pulse"
+          style={{
+            ...buttonBaseStyle,
+            backgroundColor: "#00B0FF", // Zalo Blue
+            // Dùng box-shadow để mô phỏng ring/pulse
+            boxShadow:
+              "0 0 0 0 rgba(0, 198, 255, 0.8), 0 8px 16px rgba(0, 0, 0, 0.4)",
+          }}
+          onMouseEnter={(e) => handleHover(e, 1.1)}
+          onMouseLeave={(e) => handleHover(e, 1)}
         >
-          <ZaloIcon className="w-6 h-6" />
+          <ZaloIcon style={iconStyle} />
         </a>
       </div>
     </>
   );
 };
 
-// --- Contact Form Component Chính ---
+// --- Contact Form Component Chính (Cũng chuyển sang CSS thuần/Inline) ---
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -391,16 +823,40 @@ const ContactForm = () => {
 
   const StatusMessage = () => {
     if (!status) return null;
-    const base = "p-4 mb-6 rounded-xl flex items-center shadow-md border";
-    const classes =
+    const baseStyle = {
+      padding: "16px",
+      marginBottom: "24px",
+      borderRadius: "12px",
+      display: "flex",
+      alignItems: "center",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+      border: "1px solid",
+    };
+
+    const styles =
       status.type === "success"
-        ? base + " bg-green-50 text-green-700 border-green-300"
-        : base + " bg-red-50 text-red-700 border-red-300";
+        ? {
+            ...baseStyle,
+            backgroundColor: "#f0fdf4", // Green-50
+            color: "#065f46", // Green-700
+            borderColor: "#bbf7d0", // Green-300
+          }
+        : {
+            ...baseStyle,
+            backgroundColor: "#fef2f2", // Red-50
+            color: "#b91c1c", // Red-700
+            borderColor: "#fca5a5", // Red-300
+          };
 
     const icon =
       status.type === "success" ? (
         <svg
-          className="h-5 w-5 mr-3 flex-shrink-0"
+          style={{
+            width: "20px",
+            height: "20px",
+            marginRight: "12px",
+            flexShrink: 0,
+          }}
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
@@ -412,7 +868,12 @@ const ContactForm = () => {
         </svg>
       ) : (
         <svg
-          className="h-5 w-5 mr-3 flex-shrink-0"
+          style={{
+            width: "20px",
+            height: "20px",
+            marginRight: "12px",
+            flexShrink: 0,
+          }}
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
@@ -425,37 +886,153 @@ const ContactForm = () => {
       );
 
     return (
-      <div className={classes} role="alert">
-        <p className="flex items-center text-sm font-medium">
+      <div style={styles} role="alert">
+        <p
+          style={{
+            display: "flex",
+            alignItems: "center",
+            fontSize: "14px",
+            fontWeight: "500",
+          }}
+        >
           {icon}
-          <span className="font-semibold">{status.message}</span>
+          <span style={{ fontWeight: "600" }}>{status.message}</span>
         </p>
       </div>
     );
   };
 
+  // Main Form Styles
+  const formContainerStyle = {
+    width: "100%",
+    maxWidth: "640px",
+    margin: "0 auto",
+    backgroundColor: "white",
+    padding: "48px",
+    borderRadius: "28px",
+    boxShadow: "0 30px 60px -15px rgba(0,0,0,0.2)",
+    border: "1px solid #f3f4f6", // Gray-100
+  };
+
+  const inputStyle = {
+    width: "100%",
+    padding: "12px 20px",
+    border: "1px solid #d1d5db", // Gray-300
+    borderRadius: "12px",
+    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+    transition: "border-color 0.2s, box-shadow 0.2s",
+    outline: "none",
+    backgroundColor: "white",
+    color: "#1f2937", // Gray-800
+  };
+
+  const focusInputStyle = {
+    borderColor: "#4f46e5", // Indigo-600
+    boxShadow: "0 0 0 3px rgba(79, 70, 229, 0.5)",
+  };
+
+  const buttonStyle = {
+    width: "100%",
+    padding: "16px",
+    borderRadius: "12px",
+    fontSize: "20px",
+    fontWeight: "700",
+    color: "white",
+    background: "linear-gradient(to right, #4f46e5, #9333ea)", // Indigo to Purple gradient
+    boxShadow: "0 10px 15px -3px rgba(79, 70, 229, 0.5)",
+    transition: "background-color 0.3s, transform 0.3s, opacity 0.3s",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "32px",
+    border: "none",
+    cursor: "pointer",
+  };
+
+  const spinner = (
+    <svg
+      style={{ animation: "spin 1s linear infinite", marginRight: "12px" }}
+      width="20"
+      height="20"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        style={{ opacity: 0.25 }}
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      ></circle>
+      <path
+        style={{ opacity: 0.75 }}
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+      ></path>
+    </svg>
+  );
+
   return (
-    // Toàn bộ các style giao diện đã là Tailwind CSS classes
-    <div className="min-h-screen font-sans bg-gray-50 flex items-center justify-center p-4 md:p-8">
-      {/* Form Container */}
-      <div className="w-full max-w-2xl mx-auto bg-white p-6 sm:p-12 rounded-[28px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.2)] border border-gray-100">
-        <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-2 leading-snug">
+    <div
+      style={{
+        minHeight: "100vh",
+        fontFamily: "sans-serif",
+        backgroundColor: "#f9fafb", // Gray-50
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "16px",
+      }}
+    >
+      {/* Container cho Form */}
+      <div style={formContainerStyle}>
+        <h1
+          style={{
+            fontSize: "36px",
+            fontWeight: "800",
+            color: "#111827",
+            textAlign: "center",
+            marginBottom: "8px",
+          }}
+        >
           Liên Hệ Với 2S Fresh Market
         </h1>
-        <p className="text-center text-gray-500 mb-10 max-w-md mx-auto text-lg">
+        <p
+          style={{
+            textAlign: "center",
+            color: "#6b7280",
+            marginBottom: "40px",
+            fontSize: "18px",
+            maxWidth: "400px",
+            margin: "0 auto 40px auto",
+          }}
+        >
           Gửi yêu cầu hoặc sử dụng các nút chat nhanh.
         </p>
 
         <StatusMessage />
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "24px" }}
+        >
           {/* Bố cục 2 cột cho màn hình lớn */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div
+            style={{ display: "grid", gridTemplateColumns: "1fr", gap: "24px" }}
+          >
             {/* Input Họ và Tên */}
-            <div className="relative">
+            <div style={{ position: "relative" }}>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                style={{
+                  display: "block",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  color: "#374151",
+                  marginBottom: "4px",
+                }}
               >
                 Họ và Tên (*)
               </label>
@@ -468,15 +1045,23 @@ const ContactForm = () => {
                 value={formData.name}
                 onChange={handleChange}
                 disabled={loading}
-                className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 bg-white text-gray-800"
+                style={inputStyle}
+                onFocus={(e) => Object.assign(e.target.style, focusInputStyle)}
+                onBlur={(e) => Object.assign(e.target.style, inputStyle)}
               />
             </div>
 
             {/* Input Email */}
-            <div className="relative">
+            <div style={{ position: "relative" }}>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                style={{
+                  display: "block",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  color: "#374151",
+                  marginBottom: "4px",
+                }}
               >
                 Email (*)
               </label>
@@ -489,16 +1074,24 @@ const ContactForm = () => {
                 value={formData.email}
                 onChange={handleChange}
                 disabled={loading}
-                className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 bg-white text-gray-800"
+                style={inputStyle}
+                onFocus={(e) => Object.assign(e.target.style, focusInputStyle)}
+                onBlur={(e) => Object.assign(e.target.style, inputStyle)}
               />
             </div>
           </div>
 
           {/* Input Chủ đề */}
-          <div className="relative">
+          <div style={{ position: "relative" }}>
             <label
               htmlFor="subject"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              style={{
+                display: "block",
+                fontSize: "14px",
+                fontWeight: "500",
+                color: "#374151",
+                marginBottom: "4px",
+              }}
             >
               Chủ đề
             </label>
@@ -510,15 +1103,23 @@ const ContactForm = () => {
               value={formData.subject}
               onChange={handleChange}
               disabled={loading}
-              className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 bg-white text-gray-800"
+              style={inputStyle}
+              onFocus={(e) => Object.assign(e.target.style, focusInputStyle)}
+              onBlur={(e) => Object.assign(e.target.style, inputStyle)}
             />
           </div>
 
           {/* Textarea Nội dung */}
-          <div className="relative">
+          <div style={{ position: "relative" }}>
             <label
               htmlFor="message"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              style={{
+                display: "block",
+                fontSize: "14px",
+                fontWeight: "500",
+                color: "#374151",
+                marginBottom: "4px",
+              }}
             >
               Nội dung chi tiết tin nhắn (*)
             </label>
@@ -531,7 +1132,9 @@ const ContactForm = () => {
               value={formData.message}
               onChange={handleChange}
               disabled={loading}
-              className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 resize-none bg-white text-gray-800"
+              style={{ ...inputStyle, resize: "vertical" }}
+              onFocus={(e) => Object.assign(e.target.style, focusInputStyle)}
+              onBlur={(e) => Object.assign(e.target.style, inputStyle)}
             />
           </div>
 
@@ -539,30 +1142,20 @@ const ContactForm = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 rounded-xl text-xl font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-xl shadow-indigo-400/50 hover:from-indigo-700 hover:to-purple-700 transition duration-300 ease-in-out transform hover:scale-[1.01] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mt-8"
+            style={{
+              ...buttonStyle,
+              ...(loading ? { opacity: 0.5, cursor: "not-allowed" } : {}),
+            }}
+            onMouseEnter={(e) => {
+              if (!loading) e.currentTarget.style.transform = "scale(1.01)";
+            }}
+            onMouseLeave={(e) => {
+              if (!loading) e.currentTarget.style.transform = "scale(1)";
+            }}
           >
             {loading ? (
-              <div className="flex items-center">
-                <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                  ></path>
-                </svg>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                {spinner}
                 Đang Xử Lý...
               </div>
             ) : (
@@ -571,7 +1164,14 @@ const ContactForm = () => {
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-400 mt-8">
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: "14px",
+            color: "#9ca3af",
+            marginTop: "32px",
+          }}
+        >
           Bằng việc gửi tin nhắn, bạn đồng ý với Chính sách Bảo mật của chúng
           tôi.
         </p>
