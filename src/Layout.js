@@ -601,7 +601,7 @@
 // };
 
 // export default Layout;
-
+// import BannerSlider from "./BannerSlider";
 import "./assets/css/main.css";
 import anhlogo from "./assets/images/logo.png";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -812,7 +812,7 @@ const Layout = () => {
       </header>
 
       <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-
+      {/* <BannerSlider /> */}
       <div className="body">
         <div id="container" className="container">
           <Outlet context={{ selectedId, setSelectedId }} />
