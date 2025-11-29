@@ -55,7 +55,7 @@ export default function App() {
           <Route index element={<ListProducts_SP />} />
           <Route path="san-pham" element={<Products />} />
           <Route path="lien-he" element={<ContactForm />} />
-          <Route path="About" element={<About />} />
+          <Route path="gioi-thieu" element={<About />} />
           {/* <Route path="sanpham/:id" element={<Chitietsanpham />} /> */}
           <Route path="/admin/edit/:id" element={<EditProduct />} />
 

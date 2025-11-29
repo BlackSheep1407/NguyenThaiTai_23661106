@@ -676,15 +676,11 @@ const Layout = () => {
               </li>
 
               <li class="menu-box">
-                  <a
-                    href=""
-                    className="menu-item"
-                    onClick={() => navigate("/")}
-                  >
-                    Sản phẩm
-                  </a>
-                  <ul class="submenu">
-                    {/* <li class="menu-box">
+                <a href="" className="menu-item" onClick={() => navigate("/")}>
+                  Sản phẩm
+                </a>
+                <ul class="submenu">
+                  {/* <li class="menu-box">
                       <a href="#traicaytuoi">Trái cây tươi</a>
                     </li>
                     <li class="menu-box">
@@ -696,37 +692,37 @@ const Layout = () => {
                     <li class="menu-box">
                       <a href="#nuoceptraicay">Nước ép trái cây</a>
                     </li> */}
-                    {/* MENU ĐỘNG */}
-                    {categories.length > 0 ? (
-                      categories.map((cat) => (
-                        <li
-                          key={cat.categories_id}
-                          className="menu-box"
-                          style={{ height: "auto" }}
-                        >
-                          {/* Sử dụng thẻ <a> để cuộn xuống section nếu ở trang chủ */}
-                          <a href={`/category-${cat.categories_id}`}>
-                            {cat.name}
-                          </a>
-                        </li>
-                      ))
-                    ) : (
-                      <li>
-                        <a href="#">Đang tải...</a>
+                  {/* MENU ĐỘNG */}
+                  {categories.length > 0 ? (
+                    categories.map((cat) => (
+                      <li
+                        key={cat.categories_id}
+                        className="menu-box"
+                        style={{ height: "auto" }}
+                      >
+                        {/* Sử dụng thẻ <a> để cuộn xuống section nếu ở trang chủ */}
+                        <a href={`/category-${cat.categories_id}`}>
+                          {cat.name}
+                        </a>
                       </li>
-                    )}
-                  </ul>
-                </li>
+                    ))
+                  ) : (
+                    <li>
+                      <a href="#">Đang tải...</a>
+                    </li>
+                  )}
+                </ul>
+              </li>
 
-                <li class="menu-box">
-                   <a
-                    href="trang2"
-                    className="menu-item"
-                    onClick={() => navigate("/gioithieu")}
-                  >
-                    Giới Thiệu
-                  </a>
-                </li>
+              <li class="menu-box">
+                <a
+                  href=""
+                  className="menu-item"
+                  onClick={() => navigate("/gioi-thieu")}
+                >
+                  Giới Thiệu
+                </a>
+              </li>
 
               <li className="menu-box">
                 <a
