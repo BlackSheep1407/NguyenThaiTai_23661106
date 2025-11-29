@@ -193,11 +193,12 @@
 
 // export default ContactForm;
 
-import "./assets/css/ContactForm.css";
 import React, { useState } from "react";
 
-// Cần thêm CSS cho animation rung nhẹ (vibrate)
+// --- CSS TÙY CHỈNH (INLINE) ĐÃ SỬA ---
+// Định nghĩa cả pulse và vibrate để đảm bảo hiệu ứng hoạt động hoàn hảo
 const customStyles = `
+  /* Keyframes cho hiệu ứng rung nhẹ (vibrate) */
   @keyframes vibrate {
     0% { transform: translate(1px, 1px); }
     10% { transform: translate(-1px, -2px); }
@@ -211,9 +212,23 @@ const customStyles = `
     90% { transform: translate(1px, 2px); }
     100% { transform: translate(1px, -2px); }
   }
+
+  /* Keyframes cho hiệu ứng nhấp nháy (pulse) - Định nghĩa lại để đảm bảo hoạt động */
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
   /* Áp dụng hiệu ứng rung và nhấp nháy cho nút Zalo */
   .vibrate-pulse {
-    animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite, vibrate 0.3s linear infinite;
+    /* Thay thế class pulse của Tailwind bằng keyframes đã định nghĩa rõ */
+    animation: 
+        pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite, 
+        vibrate 0.3s linear infinite;
   }
 `;
 
@@ -225,9 +240,9 @@ const CONTACT_INFO = {
   BUSINESS_EMAIL: "support@example.com",
 };
 
-// --- SVG Icons Mới ---
+// --- SVG Icons ---
 
-// Icon Zalo (Green)
+// Icon Zalo (Blue/White)
 const ZaloIcon = ({ className = "w-6 h-6" }) => (
   <svg
     className={className}
@@ -282,10 +297,9 @@ const MapIcon = ({ className = "w-6 h-6" }) => (
 const FloatingContactButtons = () => {
   return (
     <>
-      {/* Inject Custom CSS */}
+      {/* Inject Custom CSS cho animation (Đây là cách chuẩn nhất trong React 1 file) */}
       <style>{customStyles}</style>
 
-      {/* Dùng inline style cho vị trí và z-index để đảm bảo độ ưu tiên cao nhất */}
       <div
         style={{
           position: "fixed",
@@ -317,12 +331,13 @@ const FloatingContactButtons = () => {
           <MessengerIcon className="w-6 h-6" />
         </a>
 
-        {/* Zalo/Hotline (Màu Xanh Zalo - sử dụng hiệu ứng rung và nhấp nháy kết hợp) */}
+        {/* Zalo/Hotline (Màu Xanh Zalo) */}
         <a
           href={`https://zalo.me/${CONTACT_INFO.ZALO_PHONE}`}
           target="_blank"
           rel="noopener noreferrer"
           title={`Chat hoặc Gọi Zalo: ${CONTACT_INFO.ZALO_PHONE}`}
+          // Sử dụng class vibrate-pulse đã định nghĩa trong customStyles
           className="p-4 rounded-full bg-sky-500 text-white shadow-2xl hover:bg-sky-600 hover:scale-110 transition-transform duration-300 transform origin-bottom-right vibrate-pulse"
         >
           <ZaloIcon className="w-6 h-6" />
@@ -332,7 +347,7 @@ const FloatingContactButtons = () => {
   );
 };
 
-// --- Contact Form Component ---
+// --- Contact Form Component Chính ---
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -420,10 +435,9 @@ const ContactForm = () => {
   };
 
   return (
-    // Đảm bảo nền và layout chính luôn responsive và căn giữa
+    // Toàn bộ các style giao diện đã là Tailwind CSS classes
     <div className="min-h-screen font-sans bg-gray-50 flex items-center justify-center p-4 md:p-8">
       {/* Form Container */}
-      {/* Tăng shadow và bo góc để trông hiện đại hơn */}
       <div className="w-full max-w-2xl mx-auto bg-white p-6 sm:p-12 rounded-[28px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.2)] border border-gray-100">
         <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-2 leading-snug">
           Liên Hệ Với 2S Fresh Market
@@ -563,7 +577,7 @@ const ContactForm = () => {
         </p>
       </div>
 
-      {/* Floating Contact Buttons - Sử dụng Inline Style */}
+      {/* Floating Contact Buttons - Vị trí các nút liên hệ nổi */}
       <FloatingContactButtons />
     </div>
   );
