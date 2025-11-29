@@ -28,7 +28,7 @@ import ListProducts_SP from "./ListProducts_SP";
 // import Categories;
 
 // @ts-ignore
-import Trang2 from "./Trang2";
+import About from "./About";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -55,7 +55,7 @@ export default function App() {
           <Route index element={<ListProducts_SP />} />
           <Route path="san-pham" element={<Products />} />
           <Route path="lien-he" element={<ContactForm />} />
-          <Route path="trang2" element={<Trang2 />} />
+          <Route path="About" element={<About />} />
           {/* <Route path="sanpham/:id" element={<Chitietsanpham />} /> */}
           <Route path="/admin/edit/:id" element={<EditProduct />} />
 

@@ -789,7 +789,7 @@ const MemberCard = ({ member }) => {
 };
 
 // --- Component Trang Giới Thiệu Chính ---
-const Trang2 = () => {
+const About = () => {
   const [activeTab, setActiveTab] = useState("mission");
   const primaryColor = "#198754"; // Xanh lá cây đậm
   const secondaryColor = "#ffc107"; // Vàng đậm
@@ -1295,4 +1295,4 @@ const Trang2 = () => {
   );
 };
 
-export default Trang2;
+export default About;

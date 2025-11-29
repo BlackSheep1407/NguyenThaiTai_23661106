@@ -1,7 +1,8 @@
-body {
+.body {
   margin: 0;
   background-color: #FFFBE6;
   color: #333;
+  padding-top: 80px;
 }
 /* tuy chinh */
 * {
@@ -321,4 +322,66 @@ footer p {
   margin: 0;
 }
 
- 
+
+/* ========= MOBILE MODE (dưới 768px) ========= */
+/* CSS cho menu responsive */
+/* Menu desktop */
+.menubar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.menubar-left ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+.menubar-left ul li a {
+  color: white;
+  text-decoration: none;
+}
+.submenu {
+  display: none;
+  position: absolute;
+  background: #27ae60;
+  list-style: none;
+  padding: 10px;
+}
+.menu-box:hover .submenu {
+  display: block;
+}
+
+/* Mobile */
+.mobile-menu-icon {
+  display: none;
+  cursor: pointer;
+  color: white;
+}
+
+/* Khi màn hình <= 768px */
+@media (max-width: 768px) {
+  .mobile-menu-icon {
+    display: block;
+  }
+  .menubar {
+    display: none;
+    flex-direction: column;
+    background: #27ae60;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+  }
+  .menubar.active {
+    display: flex;
+  }
+  .menubar-left ul {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  .submenu {
+    position: relative;
+    background: #2ecc71;
+  }
+}

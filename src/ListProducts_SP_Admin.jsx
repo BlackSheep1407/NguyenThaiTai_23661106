@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import { useNavigate } from "react-router-dom";
-import "./assets/css/quanlysp.css";
+import "./assets/css/ListProducts_SP_Admin.css";
 
 const ListProducts_SP_Admin = () => {
   const [products, setProducts] = useState([]);
@@ -91,3 +91,4 @@ const ListProducts_SP_Admin = () => {
 };
 
 export default ListProducts_SP_Admin;
+

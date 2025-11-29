@@ -1,0 +1,108 @@
+/* Container chính */
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 25px 30px;
+    background-color: #f9fafb;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Tiêu đề form */
+  h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #111827;
+  }
+  
+  /* Form */
+  form.form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Label */
+  form.form label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+    font-weight: 500;
+    color: #374151;
+    font-size: 15px;
+  }
+  
+  /* Input */
+  form.form input {
+    margin-top: 6px;
+    padding: 10px 14px;
+    font-size: 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    transition: 0.3s ease;
+    outline: none;
+    background-color: #ffffff;
+  }
+  
+  form.form input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+  
+  /* Các nút thao tác */
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  
+  /* Nút chung */
+  .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.3s ease;
+  }
+  
+  /* Nút Hủy */
+  .btn.gray {
+    background-color: #9ca3af;
+    color: #fff;
+  }
+  
+  .btn.gray:hover {
+    background-color: #6b7280;
+  }
+  
+  /* Nút Thêm / Lưu */
+  .btn.blue {
+    background-color: #3b82f6;
+    color: #fff;
+  }
+  
+  .btn.blue:hover {
+    background-color: #2563eb;
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    .container {
+      padding: 20px;
+    }
+  
+    form.form input {
+      font-size: 14px;
+      padding: 8px 10px;
+    }
+  
+    .btn {
+      font-size: 13px;
+      padding: 8px 14px;
+    }
+  }
+  
