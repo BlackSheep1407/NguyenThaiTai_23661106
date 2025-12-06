@@ -454,7 +454,7 @@
 
 // CODE MỚI 2:
 import React, { useState } from "react";
-import anhdaidien from "./assets/images/profile_img.jpg";
+import anhdaidien from "./assets/images/profile-img.jpg";
 
 // URL placeholder chính cho trường hợp ảnh bị thiếu (Fallback ||)
 const PLACEHOLDER_AVATAR_URL =
