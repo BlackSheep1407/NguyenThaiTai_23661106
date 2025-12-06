@@ -454,13 +454,15 @@
 
 // CODE MỚI 2:
 import React, { useState } from "react";
-import anhdaidien from "./assets/images/anh-dai-dien.jpg"; 
+import anhdaidien from "./assets/images/profile_img.jpg";
 
 // URL placeholder chính cho trường hợp ảnh bị thiếu (Fallback ||)
-const PLACEHOLDER_AVATAR_URL = 'https://placehold.co/120x120/0f4c81/ffffff?text=AVT+2T';
+const PLACEHOLDER_AVATAR_URL =
+  "https://placehold.co/120x120/0f4c81/ffffff?text=AVT+2T";
 
 // URL placeholder phụ cho trường hợp ảnh load lỗi (Fallback onError)
-const ON_ERROR_FALLBACK_URL = 'https://placehold.co/120x120/cccccc/333333?text=Lỗi+Ảnh';
+const ON_ERROR_FALLBACK_URL =
+  "https://placehold.co/120x120/cccccc/333333?text=Lỗi+Ảnh";
 
 // =================================================================
 // HƯỚNG DẪN THAY ẢNH (Mô phỏng Import):
@@ -473,13 +475,13 @@ const ON_ERROR_FALLBACK_URL = 'https://placehold.co/120x120/cccccc/333333?text=L
 // const AssetMap = {
 //    // ⬇️ Thay tên file trong chuỗi (string) tại đây (Các file đã tải lên sẵn có trong hệ thống)
 //    Anhchinh: "anhdaidien",
-//    AnhKhac: "image_375c76.png", 
+//    AnhKhac: "image_375c76.png",
 //    // Ví dụ về ảnh bị thiếu:
 //    AnhKhongTonTai: null, // Dùng NULL để kiểm tra logic Fallback ||
 //   };
 const AssetMap = {
-  Anhchinh: anhdaidien,            // ← để URL trực tiếp
-  AnhKhac: "image_375c76.png",     // file trong public/assets
+  Anhchinh: anhdaidien, // ← để URL trực tiếp
+  AnhKhac: "image_375c76.png", // file trong public/assets
   AnhKhongTonTai: null,
 };
 
@@ -740,16 +742,15 @@ const MemberCard = ({ member }) => {
     textDecoration: "none",
   };
 
-// Lấy tên file thực tế từ AssetMap
+  // Lấy tên file thực tế từ AssetMap
   // Nếu member.anhKey là 'AnhKhongTonTai', thì AssetMap[member.anhKey] là null
   // const assetFileName = AssetMap[member.anhKey];
   const assetFileName = AssetMap[member.anhKey];
 
-
   // Đây là nơi để kiểm tra Fallback 1: Nếu không có file asset, sử dụng PLACEHOLDER_AVATAR_URL
   // Nếu assetFileName là null, undefined, hoặc chuỗi rỗng (thường không xảy ra với AssetMap),
   // thì nó sẽ sử dụng PLACEHOLDER_AVATAR_URL.
-  // const finalSrc = assetFileName || PLACEHOLDER_AVATAR_URL; 
+  // const finalSrc = assetFileName || PLACEHOLDER_AVATAR_URL;
   const finalSrc = assetFileName || PLACEHOLDER_AVATAR_URL;
 
   return (
@@ -765,12 +766,11 @@ const MemberCard = ({ member }) => {
           "0 10px 30px rgba(0,0,0,0.1), 0 0 0 3px #f0f0f0";
       }}
     >
-       <img
+      <img
         // SỬA: Sử dụng finalSrc để kiểm tra null/undefined
-        src={finalSrc} 
+        src={finalSrc}
         alt={member.hoten}
         style={imageStyle}
-        
         // Fallback 2: Sử dụng ON_ERROR_FALLBACK_URL khi ảnh load lỗi (404, network)
         onError={(e) => {
           // Kiểm tra để tránh vòng lặp nếu cả 2 ảnh đều lỗi
@@ -878,23 +878,22 @@ const About = () => {
       content: (
         <>
           <p style={paragraphStyle}>
-            Xin chào! Tôi là {" "}
-            <span style={{ fontWeight: "bold" }}>Nguyễn Thái Tài</span>, 
-            người sáng lập của 2Tfresh
-            Market. Chúng tôi không chỉ bán trái cây, mà còn mang đến cam kết về
-            chất lượng và sự tiện lợi. Với niềm đam mê mang lại những sản phẩm
-            chất lượng và tươi ngon nhất đến tay khách hàng, tôi hy vọng trang
-            web này sẽ là cầu nối giúp bạn dễ dàng lựa chọn và mua sắm các loại
-            trái cây yêu thích.
+            Xin chào! Tôi là{" "}
+            <span style={{ fontWeight: "bold" }}>Nguyễn Thái Tài</span>, người
+            sáng lập của 2Tfresh Market. Chúng tôi không chỉ bán trái cây, mà
+            còn mang đến cam kết về chất lượng và sự tiện lợi. Với niềm đam mê
+            mang lại những sản phẩm chất lượng và tươi ngon nhất đến tay khách
+            hàng, tôi hy vọng trang web này sẽ là cầu nối giúp bạn dễ dàng lựa
+            chọn và mua sắm các loại trái cây yêu thích.
           </p>
           <p style={paragraphStyle}>
-          {" "}
-            <span style={{ fontWeight: "bold" }}>Động Lực:</span>{" "}
-             Nhận thấy trái cây là nguồn dinh dưỡng thiết yếu và xu
-            hướng mua sắm trực tuyến ngày càng tăng, chúng tôi quyết định phát
-            triển 2Tfresh Market. Mục tiêu là tạo ra một nền tảng mua sắm trái
-            cây sạch, rõ nguồn gốc, giúp khách hàng tiết kiệm thời gian, đồng
-            thời khuyến khích thói quen ăn uống lành mạnh trong cộng đồng.
+            {" "}
+            <span style={{ fontWeight: "bold" }}>Động Lực:</span> Nhận thấy trái
+            cây là nguồn dinh dưỡng thiết yếu và xu hướng mua sắm trực tuyến
+            ngày càng tăng, chúng tôi quyết định phát triển 2Tfresh Market. Mục
+            tiêu là tạo ra một nền tảng mua sắm trái cây sạch, rõ nguồn gốc,
+            giúp khách hàng tiết kiệm thời gian, đồng thời khuyến khích thói
+            quen ăn uống lành mạnh trong cộng đồng.
           </p>
 
           <h3
